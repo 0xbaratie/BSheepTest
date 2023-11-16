@@ -1,27 +1,20 @@
+import { useRouter } from "next/router";
 import type { NextPage } from "next";
-import Head from "next/head";
 import React, { useState, useEffect } from "react";
-import { WalletConnect } from "../components/WalletConnect";
 import {
   useAccount,
   useContractRead,
   useContractWrite,
   useWaitForTransaction,
-  useDisconnect,
 } from "wagmi";
 import { NFTContractAbi } from "../data/NFTContractAbi";
 import { NFTContractAddress } from "../data/NFTContractAddress";
-import SocialAccountData from "../data/SocialAccountData";
 import RandomInterval from "../data/RandomInterval";
-import FullScreenModal from "../components/FullScreenModal";
-import LotteryModal from "../components/LotteryModal";
-import { Footer } from "../components/Footer";
+import FullScreenModal from "./FullScreenModal";
+import LotteryModal from "./LotteryModal";
+import { Footer } from "./Footer";
 
-import {
-  type WalletWithMetadata,
-  usePrivy,
-  useWallets,
-} from "@privy-io/react-auth";
+import { usePrivy } from "@privy-io/react-auth";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 
 type NumberSpanProps = {
@@ -55,38 +48,28 @@ const Button = ({ cta, onClick_, disabled }: buttonProps) => {
   );
 };
 
-const Home: NextPage = () => {
+const Game: NextPage = () => {
   const [randomNumber, setRandomNumber] = useState("1337");
   const [counter, setCounter] = useState(1);
-  const [error, setError] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [latestNums, setLatestNums] = useState<string[]>(
     Array(10).fill("....")
   );
   const [yourNum, setYourNum] = useState("");
 
+  const router = useRouter();
   // Privy hooks
-  const {
-    ready,
-    user,
-    authenticated,
-    login,
-    connectWallet,
-    logout,
-    linkWallet,
-    unlinkWallet,
-  } = usePrivy();
-  const { wallets: connectedWallets } = useWallets();
-
-  const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
-
-  // WAGMI hooks
+  const { ready, authenticated, logout } = usePrivy();
+  const { wallet: activeWallet } = usePrivyWagmi();
   const { address, isConnected, isConnecting, isDisconnected } = useAccount();
-  const { disconnect } = useDisconnect();
+  // console.log("game active wallet", activeWallet);
+  // console.log("game address", address);
+  // console.log("game activeWallet?.chainId", activeWallet?.chainId);
 
-  const wallets = user?.linkedAccounts.filter(
-    (a) => a.type === "wallet"
-  ) as WalletWithMetadata[];
+  const logout_ = async () => {
+    await logout();
+    router.reload();
+  };
 
   const closeModal = () => {
     setModalOpen(false);
@@ -193,11 +176,6 @@ const Home: NextPage = () => {
         {ready && !authenticated && (
           <>
             <p>You are not authenticated with Privy</p>
-            <div className="flex items-center gap-4">
-              <Button onClick_={login} cta="Login with Privy" />
-              <span>or</span>
-              <Button onClick_={connectWallet} cta="Connect only" />
-            </div>
           </>
         )}
 
@@ -208,37 +186,7 @@ const Home: NextPage = () => {
               <br />
               Active wallet is <MonoLabel label={activeWallet?.address || ""} />
             </p>
-            {wallets.map((wallet) => {
-              return (
-                <div
-                  key={wallet.address}
-                  className="flex min-w-full flex-row flex-wrap items-center justify-between gap-2 bg-slate-50 p-4"
-                >
-                  <div>
-                    <MonoLabel label={wallet.address} />
-                  </div>
-                  <Button
-                    cta="Make active"
-                    onClick_={() => {
-                      const connectedWallet = connectedWallets.find(
-                        (w) => w.address === wallet.address
-                      );
-                      if (!connectedWallet) connectWallet();
-                      else setActiveWallet(connectedWallet);
-                    }}
-                    disabled={wallet.address === activeWallet?.address}
-                  />
-                  <Button
-                    cta="Unlink"
-                    onClick_={() => unlinkWallet(wallet.address)}
-                  />
-                </div>
-              );
-            })}
-            <Button onClick_={linkWallet} cta="Link another wallet" />
-
-            <br />
-            <Button onClick_={logout} cta="Logout from Privy" />
+            <Button onClick_={logout_} cta="Logout from Privy" />
           </>
         )}
       </div>
@@ -293,4 +241,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Game;
