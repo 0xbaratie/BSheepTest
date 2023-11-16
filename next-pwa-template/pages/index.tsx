@@ -10,7 +10,7 @@ const Index = () => (
 			<Page >
 				<Section>
 					<h2 className='text-xl font-semibold text-zinc-800 dark:text-zinc-200'>
-						We grow a lot of rice.
+						Test
 					</h2>
 
 					<div className='mt-2'>
