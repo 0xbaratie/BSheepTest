@@ -37,7 +37,7 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
         <motion.div
           drag="x"
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-          className="h-16 w-16"
+          className="h-16 w-16 relative"
           onDragEnd={dragEnd}
           initial={{ scale: 0.95, opacity: 0.5 }}
           animate={{
@@ -54,6 +54,11 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
             fill
             alt=""
           />
+          <div
+            className="absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl z-10"
+          >
+            {data.number}
+          </div>
         </motion.div>
       ) : null}
     </>
