@@ -37,16 +37,16 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
   const handleTap = () => {
     setNumber((prevNumber: number) => prevNumber + 1);
 
-    controls.start({
-      x: [10, -10, 10],
-      transition: {
-        duration: 2.5,
-        repeat: Infinity,
-        repeatType: "reverse",
-        ease: "easeInOut",
-        delay: Math.random() * 0.5
-      }
-    });
+    // controls.start({
+    //   x: [10, -10, 10],
+    //   transition: {
+    //     duration: 2.5,
+    //     repeat: Infinity,
+    //     repeatType: "reverse",
+    //     ease: "easeInOut",
+    //     delay: Math.random() * 0.5
+    //   }
+    // });
   };  
   const controls = useAnimation();
 
