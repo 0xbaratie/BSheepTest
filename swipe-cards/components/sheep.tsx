@@ -12,6 +12,7 @@ import SwipeButton from './swipeButtons';
 
 const Sheep = ({ data, active, removeCard }: SheepProps) => {
   const [exitX, setExitX] = useState(0);
+  const [number, setNumber] = useState(data.number); 
 
   const x = useMotionValue(0);
   const input = [-200, 0, 200];
@@ -30,6 +31,10 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
       removeCard(data.id, 'left');
     }
   };
+  
+  const handleTap = () => {
+    setNumber((prevNumber: number) => prevNumber + 1);
+  };  
 
   return (
     <>
@@ -48,6 +53,7 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
           transition={{ type: 'tween', duration: 0.3, ease: 'easeIn' }}
           whileDrag={{ cursor: 'grabbing' }}
           exit={{ x: exitX }}
+          onTap={handleTap}
         >
           <Image
             src={data.src}
@@ -57,7 +63,7 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
           <div
             className="absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl z-10"
           >
-            {data.number}
+            {number}
           </div>
         </motion.div>
       ) : null}
