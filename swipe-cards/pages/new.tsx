@@ -1,4 +1,4 @@
-import Card from '@/components/card';
+import Card from '@/components/sheep';
 import Light from '@/components/Light';
 import { CardData } from '@/types';
 import { cardData } from '@/utils/data';

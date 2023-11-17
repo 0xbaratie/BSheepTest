@@ -17,7 +17,7 @@ export type CardData = {
   tracks: TracksData[];
 };
 
-export type CardProps = {
+export type SheepProps = {
   data: CardData;
   active: boolean;
   removeCard: (id: number, action: 'right' | 'left') => void;
