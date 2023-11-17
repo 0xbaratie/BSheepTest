@@ -23,7 +23,7 @@ contract SheepIt1155 is ERC1155 {
 
     uint public maxSheepCount = 0;
     // mapping( sheepId => SheepStatus )
-    mapping(uint => SheepStatus) public sheepLevel;
+    mapping(uint => SheepStatus) public sheepStatus;
     // mapping( player => stamina )
     mapping(address => uint) public stamina;
 
@@ -45,7 +45,7 @@ contract SheepIt1155 is ERC1155 {
             revert("Sheep does not exist");
         }
 
-        SheepStatus storage _status = sheepLevel[_sheepId];
+        SheepStatus storage _status = sheepStatus[_sheepId];
         _status.level++;
         emit Sheepened(_sheepId, _status.level, _status.shippedAt);
 
@@ -60,12 +60,12 @@ contract SheepIt1155 is ERC1155 {
         }
 
         //emit the levelo of sheep
-        uint _oldLevel = sheepLevel[_sheepId].level;
+        uint _oldLevel = sheepStatus[_sheepId].level;
         emit Shipped(msg.sender, _oldLevel);
 
         //initiate the sheep
         uint _shippedAt = block.timestamp;
-        sheepLevel[_sheepId] = SheepStatus(0, _shippedAt);
+        sheepStatus[_sheepId] = SheepStatus(0, _shippedAt);
         emit Sheepened(_sheepId, 0, _shippedAt);
 
         _mint(msg.sender, SHIP_COUNT, 1, "");

@@ -1,10 +1,10 @@
-import { formatEther, parseEther } from "viem";
-import hre from "hardhat";
+import env from "hardhat";
 
 async function main() {
-  const sheepIt1155 = await hre.viem.deployContract("SheepIt1155", []);
-
-  console.log(`deployed to ${sheepIt1155.address}`);
+  await env.run("verify:verify", {
+    address: "0x8edd6e95724b05564039c286a2872c5475ceb8a8",
+    constructorArguments: [],
+  });
 }
 
 // We recommend this pattern to be able to use async/await everywhere
