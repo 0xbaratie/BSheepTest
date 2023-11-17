@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { SheepProps } from '@/types';
 import {
   easeIn,
@@ -5,6 +6,7 @@ import {
   PanInfo,
   useMotionValue,
   useTransform,
+  useAnimation
 } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -34,7 +36,36 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
   
   const handleTap = () => {
     setNumber((prevNumber: number) => prevNumber + 1);
+
+    controls.start({
+      x: [10, -10, 10],
+      transition: {
+        duration: 2.5,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut",
+        delay: Math.random() * 0.5
+      }
+    });
   };  
+  const controls = useAnimation();
+
+  useEffect(() => {
+    const delay = Math.random() * 0.5; // 0 to 0.5 second random delay
+
+    controls.start({
+      x: [10, -10, 10],
+      transition: {
+        duration: 2.5,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut",
+        delay: delay // 遅延を設定
+      }
+    });
+
+    return () => controls.stop();
+  }, [controls]);
 
   return (
     <>
@@ -45,10 +76,7 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
           className="h-16 w-16 relative"
           onDragEnd={dragEnd}
           initial={{ scale: 0.95, opacity: 0.5 }}
-          animate={{
-            scale: 1.05,
-            opacity: 1,
-          }}
+          animate={controls}
           style={{ x, rotate, opacity }}
           transition={{ type: 'tween', duration: 0.3, ease: 'easeIn' }}
           whileDrag={{ cursor: 'grabbing' }}
@@ -62,6 +90,7 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
           />
           <div
             className="absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl z-10"
+            onTap={handleTap}
           >
             {number}
           </div>
