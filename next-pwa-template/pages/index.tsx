@@ -1,22 +1,29 @@
-import Page from '@/components/page'
-import Section from '@/components/section'
-import Sheep from '../public/images/sheep.svg'
+import React from 'react';
+import { useSwipeable } from 'react-swipeable';
+import Page from '../components/page';
+import Section from '../components/section';
 
-const Index = () => (
-	<>
-	  <div className="hidden sm:block">
-			<p>The display here appears on non-smartphones.</p>
-		</div>
-	  <div className='sm:hidden'>
-			<Page >
-				<Section>
-					<img src="/images/sheep.svg" alt="Sheep Icon" className="w-18 h-18" />
-				</Section>
-			</Page>
-		</div>
-	</>
-  
-	
-)
+const Index = () => {
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => console.log("User Swiped!", eventData),
+    onSwipedUp: () => console.log("Swiped Up"),
+    onSwipedLeft: () => console.log("Swiped Left"),
+  });
 
-export default Index
+  return (
+    <>
+      <div className="hidden sm:block">
+        <p>The display here appears on non-smartphones.</p>
+      </div>
+      <div className='sm:hidden'>
+        <Page>
+          <Section {...handlers}>
+            <img src="/images/sheep.svg" alt="Sheep Icon" className="w-18 h-18" />
+          </Section>
+        </Page>
+      </div>
+    </>
+  );
+};
+
+export default Index;
