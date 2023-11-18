@@ -238,7 +238,10 @@ const Index = () => {
 								</h2>
 							)}
 						</AnimatePresence>
-						<Mint/>
+						<Mint
+							sheep={sheep}
+							setSheep={setSheep}
+						/>
 					</div>
 				</Page>
 			</div>

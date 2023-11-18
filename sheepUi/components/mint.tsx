@@ -5,8 +5,9 @@ import {
 	useContractWrite,
 	usePrepareContractWrite,
 } from 'wagmi'
+import { MintProps, type SheepData } from '@/types'
 
-const Mint = () => {
+const Mint = ({ sheep, setSheep }: MintProps) => {
 	const [isMinted, setIsMinted] = useState(false)
 
 	const { config: configMint } = usePrepareContractWrite({
@@ -26,6 +27,13 @@ const Mint = () => {
 						onClick={() => {
 							writeMint?.()
 							setIsMinted(true)
+							setSheep([
+								...sheep,
+								{
+									id: sheep.length,
+									level: 0,
+								}
+							])
 						}}>
 							Start
 					</button>

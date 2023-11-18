@@ -19,3 +19,8 @@ export type SwipeButtonProps = {
 	removeCard: (id: number, action: 'right' | 'left') => void
 	id: number
 }
+
+export type MintProps = {
+	sheep: SheepData[]
+	setSheep: (value: SetStateAction<SheepData[]>) => void
+}
