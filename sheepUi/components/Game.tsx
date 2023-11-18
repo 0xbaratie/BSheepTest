@@ -143,7 +143,7 @@ const Game: NextPage = () => {
               <>
                 <span>{activeWallet?.address}</span>
                 <button
-                  className="border-none mt-6 btn bg-primary text-white hover:bg-primary-hover"
+                  className="border-none mt-6 btn bg-blue text-white hover:bg-primary-hover"
                   type="button"
                   onClick={() => writeA?.()}
                 >
