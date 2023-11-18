@@ -1,13 +1,13 @@
 import Card from '@/components/sheep';
-import { CardData } from '@/types';
-import { cardData } from '@/utils/data';
+import { SheepData } from '@/types';
+import { sheepData } from '@/utils/data';
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { SetStateAction, useState } from 'react';
 import Lights from '../public/lights.png';
 
 export default function Home() {
-  const [cards, setCards] = useState<CardData[]>(cardData);
+  const [cards, setCards] = useState<SheepData[]>(sheepData);
   const [rightSwipe, setRightSwipe] = useState(0);
   const [leftSwipe, setLeftSwipe] = useState(0);
 

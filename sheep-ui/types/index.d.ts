@@ -7,7 +7,7 @@ type TracksData = {
   img: string;
 };
 
-export type CardData = {
+export type SheepData = {
   id: number;
   name: string;
   src: StaticImageData;
@@ -18,7 +18,7 @@ export type CardData = {
 };
 
 export type SheepProps = {
-  data: CardData;
+  data: SheepData;
   active: boolean;
   removeCard: (id: number, action: 'right' | 'left') => void;
 };

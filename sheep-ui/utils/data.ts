@@ -1,5 +1,5 @@
 import Profile from '../public/sheep.svg';
-export const cardData = [
+export const sheepData = [
   {
     id: 0,
     src: Profile,
