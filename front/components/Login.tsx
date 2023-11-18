@@ -1,43 +1,29 @@
 import { usePrivy } from "@privy-io/react-auth";
 
-// import logo from "../../public/assets/logo.png";
-// import { TERMS_OF_SERVICE } from "./config";
-
 const Login = () => {
   const { login } = usePrivy();
 
   return (
-    <div className="h-screen w-full flex flex-col items-center justify-center">
+    <div className="h-screen w-screen items-center justify-center">
       <div className="flex flex-col gap-12">
-        <div className="flex gap-1 tracking-tight">
-          <div className="w-6 h-6">
-            {/* <img src={logo} className="object-fit" /> */}
+        {/* <div className="hidden sm:flex flex-col items-center justify-center bg-blue h-screen"> */}
+        <div className="flex flex-col items-center justify-center bg-blue h-screen">
+          <img src="/images/sheep.svg" alt="Sheep Icon" className="w-18 h-18" />
+          <p className="p-2 font-bold text-4xl text-white">Sheep It</p>
+          <p className="p-2 font-bold text-md  text-white">An onchain Sheeping (Sheep * ship it) game</p>
+          <div className="w-72 tracking-tight text-xs bg-stone-300 p-2 rounded-sm text-gray-200">
+            This is beta software that is an interface to (open source, verified)
+            smart contracts not known to have been audited. Use at your own risk.
           </div>
-          <div className="font-bold text-xl">
-            <span className="text-yellow-800">DRAW</span>.TECH
-          </div>
-        </div>
-
-        <div>An fully onchain drawing game</div>
-
-        <div className="w-72 tracking-tight text-xs bg-stone-300 p-2">
-          This is beta software that is an interface to (open source, verified)
-          smart contracts not known to have been audited. Use at your own risk.
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <div className="h-12 select-none">
-            <div
-              className="bg-yellow-400 text-yellow-800 border border-r-2 border-b-4 border-yellow-800 font-bold tracking-tight p-2 text-xl rounded-sm w-72 text-center active:border"
-              onClick={login}
-            >
-              <button>SIGN IN</button>
+          <div className="flex flex-col gap-4 mt-4">
+            <div className="h-12 select-none">
+              <div
+                className="bg-blue text-white border border-r-2 border-b-4 border-white font-bold tracking-tight p-2 text-xl rounded-sm w-72 text-center active:border"
+                onClick={login}
+              >
+                <button>SIGN IN</button>
+              </div>
             </div>
-          </div>
-          <div className="w-72 tracking-tight text-xs bg-yellow-100 p-2">
-            By clicking SIGN IN, you agree to the{" "}
-            {/* <a className="underline" href={TERMS_OF_SERVICE}> */}
-            <a className="underline">Terms of Service.</a>
           </div>
         </div>
       </div>
