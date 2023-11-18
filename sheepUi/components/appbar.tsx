@@ -20,18 +20,18 @@ const Appbar = ({ furAmount, tapAmount, shipAmount }: AppbarProps) => {
 				<div className="flex justify-center">
 					<div className='mx-auto flex h-8 max-w-screen-md items-center justify-between px-2'>
 						<p className='text-blue font-bold text-3xl'>
-							<span className="pr-1">1000</span> 
+							<span className="pr-1">{furAmount}</span> 
 							fur
 						</p>
 					</div>
 				</div>
-				<p className='text-center text-blue font-bold'>Rest</p>
+				<p className='text-center text-blue'>Rest</p>
 				<div className="flex justify-center items-center">
 					
 					<span className='text-blue'>Tap:</span>
-					<span className='text-blue mr-1'>10</span>
+					<span className='text-blue mr-1'>{tapAmount}</span>
 					<span className='text-blue ml-1'>Ship:</span>
-					<span className='text-blue'>3</span>
+					<span className='text-blue'>{shipAmount}</span>
 			</div>
 
 			</header>

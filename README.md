@@ -4,11 +4,11 @@ The following are features
 
 - One sheep is generated for each wallet generated. (Press the button once before playing the game in this hackathon.)
 - Tap a sheep to increase the score for each sheep.
-- You can also swipe up on a sheep to ship it and get more points!
+- You can also swipe on a sheep to ship it and get more points!
 
-<img width="881" alt="Screenshot 2023-11-18 at 19 29 03" src="https://github.com/aw-labs/BSheepTest/assets/8872443/b7ba7cc9-0586-40ef-a68c-30b70a724ac9">
+<img width="905" alt="Screenshot_2023-11-18_at_11 26 27_PM" src="https://github.com/aw-labs/BSheepTest/assets/8872443/d1edd18a-1e86-4c25-8985-7656aab45b60">
 
-    
+
 
 # Game tactics
 The more you tap the same sheep, the exponentially more benefits you get, but anyone can ship any sheep at any time.

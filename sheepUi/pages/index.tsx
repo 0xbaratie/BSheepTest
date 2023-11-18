@@ -102,7 +102,6 @@ const Index = () => {
 	const { ready } = usePrivy()
 	const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi()
 	const { address, isConnected } = useAccount()
-
 	const {
 		data,
 		isLoading: isBalanceLoading,
@@ -144,18 +143,47 @@ const Index = () => {
 		enabled: !!SheepUpContractAddress,
 	})
 	const { write: writeShip } = useContractWrite(configShip)
+  const { data: shipStamina } = useContractRead({
+    address: SheepUpContractAddress,
+    abi: SheepUpContractAbi,
+    functionName: 'getPlayerShipStamina',
+    args: [address],
+    watch: true,
+  })
+
+  const { data: tapStamina } = useContractRead({
+    address: SheepUpContractAddress,
+    abi: SheepUpContractAbi,
+    functionName: 'getPlayerTapStamina',
+    args: [address],
+    watch: true,
+  })
+
+  const { data: point } = useContractRead({
+    address: SheepUpContractAddress,
+    abi: SheepUpContractAbi,
+    functionName: 'point',
+    args: [address],
+    watch: true,
+  })
+
+
+  const shipStaminaNumber = shipStamina ? Number(shipStamina) : 0;
+  const shipTapNumber = tapStamina ? Number(tapStamina) : 0;
+  const pointNumber = point ? Number(point) : 0;
+
 
 	const NotSpDisplay = () => {
 		return (
 			<div className='hidden sm:flex flex-col items-center justify-center bg-blue h-screen'>
 				<img src='/images/sheep.svg' alt='Sheep Icon' className='w-18 h-18' />
-				<p className='p-2 font-bold text-4xl text-white'>Sheep It</p>
+				<p className='p-2 font-bold text-4xl text-white'>Sheep Up</p>
 				<p className='p-2 font-bold text-md text-white'>
 					An onchain Sheeping (Sheep * ship it) game
 				</p>
 				<div className='bg-gray rounded-md p-4 mt-8'>
 					<p className='text-black font-bold'>
-						Sheep It is only on mobile. Visit on your phone to play.
+						Sheep Up is only on mobile. Visit on your phone to play.
 					</p>
 				</div>
 			</div>
@@ -187,7 +215,7 @@ const Index = () => {
 		<>
 			<NotSpDisplay />
 			<div className='sm:hidden'>
-        <Appbar furAmount={1000} tapAmount={10} shipAmount={3} />
+        <Appbar furAmount={pointNumber} tapAmount={shipTapNumber} shipAmount={shipStaminaNumber} />
 				<Page>
 					<div className='relative flex flex-wrap w-ful'>
 						<AnimatePresence>

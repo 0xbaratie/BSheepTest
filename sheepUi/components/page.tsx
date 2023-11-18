@@ -8,7 +8,7 @@ const Page = ({ title, children }: Props) => (
 	<>
 		{title ? (
 			<Head>
-				<title>Sheep It | {title}</title>
+				<title>Sheep Up | {title}</title>
 			</Head>
 		) : null}
 
