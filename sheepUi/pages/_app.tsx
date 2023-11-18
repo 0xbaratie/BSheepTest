@@ -69,7 +69,8 @@ function App({ Component, pageProps }: AppProps) {
             content="https://bsheep.vercel.app/ogp.png"
           />
         </Head>
-        <LoginGate />
+        <Component {...pageProps} />
+        {/* <LoginGate /> */}
       </PrivyWagmiConnector>
     </PrivyProvider>
   );
