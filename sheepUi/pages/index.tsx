@@ -141,7 +141,6 @@ const Index = () => {
 		enabled: !!SheepUpContractAddress,
 	})
 	const { write: writeShip } = useContractWrite(configShip)
-
   const { data: shipStamina } = useContractRead({
     address: SheepUpContractAddress,
     abi: SheepUpContractAbi,
@@ -170,6 +169,7 @@ const Index = () => {
   const shipStaminaNumber = shipStamina ? Number(shipStamina) : 0;  
   const shipTapNumber = tapStamina ? Number(tapStamina) : 0;
   const pointNumber = point ? Number(point) : 0;
+
 
 	const NotSpDisplay = () => {
 		return (
