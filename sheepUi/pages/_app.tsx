@@ -34,11 +34,11 @@ function App({ Component, pageProps }: AppProps) {
     >
       <PrivyWagmiConnector wagmiChainsConfig={configureChainsConfig}>
         <Head>
-          <title>BSheep</title>
-          <meta property="og:title" content="BSheep - Are you 1337?" />
+          <title>SheepUp</title>
+          <meta property="og:title" content="SheepUp - MMO Score Scoring Full-on Chain Game" />
           <meta
             property="og:description"
-            content="BSheep is a fully onchain number game for only Farcaster users."
+            content="SheepUp is a fully onchain number game for only Farcaster users."
           />
           <meta property="og:image" content="/ogp.png" />
           <link
@@ -59,17 +59,18 @@ function App({ Component, pageProps }: AppProps) {
             href="/apple-touch-icon.png"
           />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content="BSheep - Are you 1337?" />
+          <meta name="twitter:title" content="SheepUp - MMO Score Scoring Full-on Chain Game" />
           <meta
             name="twitter:description"
-            content="BSheep is a fully onchain number game for only Farcaster users."
+            content="SheepUp is a fully onchain number game for only Farcaster users."
           />
           <meta
             name="twitter:image"
             content="https://bsheep.vercel.app/ogp.png"
           />
         </Head>
-        <LoginGate />
+        <Component {...pageProps} />
+        {/* <LoginGate /> */}
       </PrivyWagmiConnector>
     </PrivyProvider>
   );
