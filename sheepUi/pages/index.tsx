@@ -2,30 +2,23 @@ import React, { useEffect } from 'react'
 import { useSwipeable } from 'react-swipeable'
 import Page from '../components/page'
 import Section from '../components/section'
-import Card from '@/components/sheep'
+import Sheep from '@/components/sheep'
 import { SheepData } from '@/types'
 import { sheepData } from '@/utils/data'
 import { AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { useState } from 'react'
-import { SheepUpContractAbi } from '../data/SheepUpContractAbi'
-import { SheepUpContractAddress } from '../data/SheepUpContractAddress'
 
 import { zeroAddress } from 'viem'
-import {
-	useAccount,
-	useBalance,
-	useContractRead,
-	useContractWrite,
-	useWaitForTransaction,
-	usePrepareContractWrite,
-} from 'wagmi'
+import { useBalance } from 'wagmi'
 
 import Game from '../components/Game'
 import GetEth from '../components/GetEth'
 import Login from '../components/Login'
 
 import { baseGoerli } from 'wagmi/chains'
+
+import { useAccount } from 'wagmi'
 
 import { usePrivy } from '@privy-io/react-auth'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
@@ -49,8 +42,6 @@ const Index = () => {
 	const [sheep, setSheep] = useState<SheepData[]>(sheepData)
 	const [rightSwipe, setRightSwipe] = useState(0)
 	const [leftSwipe, setLeftSwipe] = useState(0)
-	const [sheepenedData, setSheepenedData] = useState<SheepenedData[]>([])
-	const [taps, setTaps] = useState<number[]>([])
 
 	async function sheepend() {
 		console.log('sheepend')
@@ -58,10 +49,9 @@ const Index = () => {
 			const data = await Sheepend()
 
 			if (data && data.sheepeneds) {
-				console.log('@@@data.sheepeneds=', data.sheepeneds)
-				setSheepenedData(data.sheepeneds)
+				console.log('@@@data.sheepeneds1=', data.sheepeneds)
+				setSheep(data.sheepeneds)
 			}
-			console.log('@@@sheepeneds1=', sheepenedData)
 		} catch (err) {
 			if (err instanceof Error) {
 				console.error(err.message)
@@ -72,7 +62,7 @@ const Index = () => {
 	}
 
 	const activeIndex = sheep.length - 1
-	const removeCard = (id: number, action: 'right' | 'left') => {
+	const removeSheep = (id: number, action: 'right' | 'left') => {
 		setSheep((prev) => prev.filter((sheep) => sheep.id !== id))
 		if (action === 'right') {
 			setRightSwipe((prev) => prev + 1)
@@ -80,19 +70,9 @@ const Index = () => {
 			setLeftSwipe((prev) => prev + 1)
 		}
 	}
-	const tapCard = (id: number) => {
-		setTaps((prev) => [...prev, id])
-		// TODO when initial, cannot add taps to the array
-		if (taps.length >= 9) {
-			writeTaps?.()
-			setTaps([])
-		}
-	}
 	const { ready } = usePrivy()
 	const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi()
 	const { address, isConnected } = useAccount()
-	// console.log("active wallet", activeWallet);
-	// console.log("address", address);
 
 	const {
 		data,
@@ -116,15 +96,6 @@ const Index = () => {
 	useEffect(() => {
 		sheepend()
 	}, [])
-
-	const { config } = usePrepareContractWrite({
-		address: SheepUpContractAddress,
-		abi: SheepUpContractAbi,
-		functionName: 'taps',
-		args: [taps],
-		enabled: !!SheepUpContractAddress,
-	})
-	const { write: writeTaps, isSuccess } = useContractWrite(config)
 
 	const NotSpDisplay = () => {
 		return (
@@ -173,12 +144,11 @@ const Index = () => {
 						<AnimatePresence>
 							{sheep.length ? (
 								sheep.map((sheep) => (
-									<Card
+									<Sheep
 										key={sheep.id}
 										data={sheep}
 										active={true}
-										removeCard={removeCard}
-										tapCard={tapCard}
+										removeSheep={removeSheep}
 									/>
 								))
 							) : (

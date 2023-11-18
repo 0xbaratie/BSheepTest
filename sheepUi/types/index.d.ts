@@ -3,14 +3,13 @@ import { SetStateAction } from 'react'
 
 export type SheepData = {
 	id: number
-	number: number
-	src: StaticImageData
+	level: number
 }
 
 export type SheepProps = {
 	data: SheepData
 	active: boolean
-	removeCard: (id: number, action: 'right' | 'left') => void
+	removeSheep: (id: number, action: 'right' | 'left') => void
 	tapCard: (id: number) => void
 }
 
