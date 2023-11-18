@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import { useSwipeable } from 'react-swipeable';
 import Page from '../components/page';
 import Section from '../components/section';
@@ -8,6 +8,21 @@ import { sheepData } from '@/utils/data';
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
+
+import { zeroAddress } from "viem";
+import { useBalance } from "wagmi";
+
+import Game from "../components/Game";
+import GetEth from "../components/GetEth";
+import Login from "../components/Login";
+
+import { baseGoerli } from "wagmi/chains";
+
+import { useAccount } from "wagmi";
+
+import { usePrivy } from "@privy-io/react-auth";
+import { usePrivyWagmi } from "@privy-io/wagmi-connector";
+
 
 const Index = () => {
   const handlers = useSwipeable({
@@ -28,9 +43,33 @@ const Index = () => {
       setLeftSwipe((prev) => prev + 1);
     }
   };
+  const { ready } = usePrivy();
+  const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
+  const { address, isConnected } = useAccount();
+  // console.log("active wallet", activeWallet);
+  // console.log("address", address);
 
-  return (
-    <>
+  const {
+    data,
+    isLoading: isBalanceLoading,
+    refetch,
+  } = useBalance({
+    address: address ?? zeroAddress,
+    //TODO
+    chainId: baseGoerli.id,
+  });
+
+  const balance = data?.value;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const NotSpDisplay = () => {
+    return (
       <div className="hidden sm:flex flex-col items-center justify-center bg-blue h-screen">
         <img src="/images/sheep.svg" alt="Sheep Icon" className="w-18 h-18" />
         <p className="p-2 font-bold text-4xl">Sheep It</p>
@@ -41,7 +80,33 @@ const Index = () => {
           </p>
         </div>
       </div>
+    );
+  };
 
+  if (!address) {
+    return (
+      <>
+        <NotSpDisplay />
+        <div className="sm:hidden absolute top-0 left-0 h-screen w-screen bg-stone-100">
+          <Login />
+        </div>
+      </>
+    );
+  }
+  if (!balance) {
+    return (
+      <>
+        <NotSpDisplay />
+        <div className="sm:hidden absolute top-0 left-0 h-screen w-screen bg-stone-100">
+          <GetEth address={address} />
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <NotSpDisplay />
       <div className='sm:hidden'>
         <Page>
           <div className="relative flex flex-wrap w-ful">
