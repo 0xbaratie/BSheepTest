@@ -1,0 +1,39 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: SheepIt
+    network: base-testnet
+    source:
+      address: "0xe2c34d76643cc7a79d091821a06e8293053abbfa"
+      abi: SheepIt
+      startBlock: 12548866
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ApprovalForAll
+        - Sheepened
+        - Shipped
+        - TransferBatch
+        - TransferSingle
+        - URI
+      abis:
+        - name: SheepIt
+          file: ./abis/SheepIt.json
+      eventHandlers:
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: Sheepened(indexed uint256,uint256,uint256)
+          handler: handleSheepened
+        - event: Shipped(indexed address,uint256)
+          handler: handleShipped
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: URI(string,indexed uint256)
+          handler: handleURI
+      file: ./src/sheep-it.ts
