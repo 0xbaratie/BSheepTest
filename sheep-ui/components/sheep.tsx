@@ -90,7 +90,6 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
           />
           <div
             className="absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl z-10"
-            onTap={handleTap}
           >
             {number}
           </div>
