@@ -45,7 +45,7 @@ const GetEth = ({ address }: { address: Address }) => {
         <div className="flex flex-col gap-2">
           <h1 className="text-2xl font-bold text-white">Get some ETH on Base</h1>
           <p className="text-sm text-white">
-            You'll use ETH, the official currency of Base, to buy tiles and earn
+          You will use ETH, the official currency of Base, to buy tiles and earn
             rewards
           </p>
 
@@ -68,7 +68,7 @@ const GetEth = ({ address }: { address: Address }) => {
           </div>
         </div>
         <div className="text-sm">
-          Once there is GoerliETH in your wallet, you'll get started with the rest of
+          Once there is GoerliETH in your wallet, you will get started with the rest of
           the app. We recommend at least 0.01 ETH.
         </div>
       </div>

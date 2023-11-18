@@ -11,7 +11,6 @@ import {
 import { NFTContractAbi } from "../data/NFTContractAbi";
 import { NFTContractAddress } from "../data/NFTContractAddress";
 import RandomInterval from "../data/RandomInterval";
-import FullScreenModal from "./FullScreenModal";
 import LotteryModal from "./LotteryModal";
 import { Footer } from "./Footer";
 
@@ -103,20 +102,6 @@ const Game: NextPage = () => {
 
   const hashValue = writeData?.hash;
 
-  useWaitForTransaction({
-    hash: hashValue,
-    onSettled(data, error) {
-      const response = data ? data.logs[0] : [];
-
-      if ("data" in response) {
-        const responseData = response.data;
-        setYourNum(parseInt(responseData, 16).toString());
-        console.log("@@response=", response);
-        console.log("@@responseData=", parseInt(responseData, 16).toString());
-      }
-    },
-  });
-
   const NumberSpan: React.FC<NumberSpanProps> = ({
     children,
     marginRight = true,
@@ -130,71 +115,23 @@ const Game: NextPage = () => {
     </span>
   );
 
-  useEffect(() => {
-    if (numberData !== undefined) {
-      const numberAsString = numberData.toString().padStart(4, "0");
-
-      setLatestNums((prevNums) => {
-        if (!prevNums.includes(numberAsString)) {
-          const newNums = [numberAsString, ...prevNums];
-          return newNums.slice(0, 10);
-        }
-        return prevNums;
-      });
-    }
-
-    if (isSuccess && parseInt(yourNum) > 0) {
-      setLatestNums((prevNums) => {
-        if (!prevNums.includes(yourNum)) {
-          const numberAsString = yourNum.toString().padStart(4, "0");
-          return [numberAsString, ...prevNums.slice(0, 9)];
-        }
-        return prevNums;
-      });
-      setModalOpen(true);
-    }
-  }, [address, yourNum, numberData]);
-
-  RandomInterval(counter, setCounter, setRandomNumber);
-
   if (!ready) {
-    return;
+    return null;
   }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <FullScreenModal isOpen={modalOpen} onClose={closeModal}>
-        <LotteryModal onClose={closeModal} yourNum={yourNum} />
-      </FullScreenModal>
-
       <div className="border-1 flex flex-col items-start gap-2 rounded border border-black bg-slate-100 p-3">
-        <h1 className="text-4xl font-bold">Privy</h1>
-        {ready && !authenticated && (
-          <>
-            <p>You are not authenticated with Privy</p>
-          </>
-        )}
-
         {ready && authenticated && (
           <>
             <p>
-              You are logged in with privy.
-              <br />
               Active wallet is <MonoLabel label={activeWallet?.address || ""} />
             </p>
-            <ul>
-              {wallets.map((wallet) => (
-                <li key={wallet.address}>
-                  <button onClick={() => setActiveWallet(wallet)}>Activate {wallet.address}</button>
-                </li>
-              ))}
-            </ul>
             <Button onClick_={logout_} cta="Logout from Privy" />
           </>
         )}
       </div>
       <div className="border-1 flex flex-col items-start gap-2 rounded border border-black bg-slate-100 p-3">
-        <h1 className="text-4xl font-bold">WAGMI</h1>
         <p>
           Connection status: {isConnecting && <span>🟡 connecting...</span>}
           {isConnected && <span>🟢 connected.</span>}
