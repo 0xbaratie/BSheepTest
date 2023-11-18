@@ -12,7 +12,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import SwipeButton from './swipeButtons';
 
-const Sheep = ({ data, active, removeCard }: SheepProps) => {
+const Sheep = ({ data, active, removeSheep }: SheepProps) => {
   const [exitX, setExitX] = useState(0);
   const [number, setNumber] = useState(data.number); 
 
@@ -27,10 +27,10 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
   ) => {
     if (info.offset.x > 100) {
       setExitX(200);
-      removeCard(data.id, 'right');
+      removeSheep(data.id, 'right');
     } else if (info.offset.x < -100) {
       setExitX(-200);
-      removeCard(data.id, 'left');
+      removeSheep(data.id, 'left');
     }
   };
   

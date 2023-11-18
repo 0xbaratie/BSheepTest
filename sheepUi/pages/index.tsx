@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSwipeable } from 'react-swipeable';
 import Page from '../components/page';
 import Section from '../components/section';
-import Card from '@/components/sheep';
+import Sheep from '@/components/sheep';
 import { SheepData } from '@/types';
 import { sheepData } from '@/utils/data';
 import { AnimatePresence } from 'framer-motion';
@@ -52,10 +52,10 @@ const Index = () => {
       const data = await Sheepend();
   
       if (data && data.sheepeneds) {
-        console.log("@@@data.sheepeneds=", data.sheepeneds);
+        console.log("@@@data.sheepeneds1=", data.sheepeneds);
         setSheepenedData(data.sheepeneds);
       }
-      console.log("@@@sheepeneds1=", sheepenedData)
+      console.log("@@@sheepeneds2=", sheepenedData)
     } catch (err) {
       if (err instanceof Error) {
         console.error(err.message);
@@ -66,7 +66,7 @@ const Index = () => {
   }
 
   const activeIndex = sheep.length - 1;
-  const removeCard = (id: number, action: 'right' | 'left') => {
+  const removeSheep = (id: number, action: 'right' | 'left') => {
     setSheep((prev) => prev.filter((sheep) => sheep.id !== id));
     if (action === 'right') {
       setRightSwipe((prev) => prev + 1);
@@ -77,8 +77,6 @@ const Index = () => {
   const { ready } = usePrivy();
   const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
   const { address, isConnected } = useAccount();
-  // console.log("active wallet", activeWallet);
-  // console.log("address", address);
 
   const {
     data,
@@ -148,11 +146,11 @@ const Index = () => {
             <AnimatePresence>
               {sheep.length ? (
                 sheep.map((sheep) => (
-                  <Card
+                  <Sheep
                     key={sheep.id}
                     data={sheep}
                     active={true}
-                    removeCard={removeCard}
+                    removeSheep={removeSheep}
                   />
                 ))
               ) : (
