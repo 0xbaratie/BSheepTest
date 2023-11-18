@@ -1,20 +1,21 @@
-import { StaticImageData } from 'next/image';
-import { SetStateAction } from 'react';
+import { StaticImageData } from 'next/image'
+import { SetStateAction } from 'react'
 
 export type SheepData = {
-  id: number;
-  number: number;
-  src: StaticImageData;
-};
+	id: number
+	number: number
+	src: StaticImageData
+}
 
 export type SheepProps = {
-  data: SheepData;
-  active: boolean;
-  removeCard: (id: number, action: 'right' | 'left') => void;
-};
+	data: SheepData
+	active: boolean
+	removeCard: (id: number, action: 'right' | 'left') => void
+	tapCard: (id: number) => void
+}
 
 export type SwipeButtonProps = {
-  exit: (value: SetStateAction<number>) => void;
-  removeCard: (id: number, action: 'right' | 'left') => void;
-  id: number;
-};
+	exit: (value: SetStateAction<number>) => void
+	removeCard: (id: number, action: 'right' | 'left') => void
+	id: number
+}
