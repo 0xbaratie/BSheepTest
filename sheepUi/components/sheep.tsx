@@ -84,7 +84,7 @@ const Sheep = ({ data, active, removeSheep }: SheepProps) => {
           onTap={handleTap}
         >
           <Image
-            src={data.src}
+            src="/images/sheep.svg"
             fill
             alt=""
           />
