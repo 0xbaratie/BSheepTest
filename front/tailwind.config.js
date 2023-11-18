@@ -11,10 +11,14 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#855DCD',
-          text: '#855DCD',
-          hover: '#A682FF',
+          DEFAULT: '#3866F6',
+          text: '#3866F6',
+          hover: '#3866F6',
         },
+        blue: '#3866F6',
+				black: '#23262F',
+				gray: '#D9D9D9',
+        white: '#FFFFFF',
       },
       fontFamily: {
         mincho: ['ShipporiMincho'],
