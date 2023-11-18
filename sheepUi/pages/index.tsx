@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSwipeable } from 'react-swipeable'
 import Page from '../components/page'
 import Section from '../components/section'
+import Appbar from '../components/appbar'
 import Sheep from '@/components/sheep'
 import { SheepData } from '@/types'
 import { sheepData } from '@/utils/data'
@@ -100,7 +101,6 @@ const Index = () => {
 	const { ready } = usePrivy()
 	const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi()
 	const { address, isConnected } = useAccount()
-
 	const {
 		data,
 		isLoading: isBalanceLoading,
@@ -140,7 +140,36 @@ const Index = () => {
 		args: [ship],
 		enabled: !!SheepUpContractAddress,
 	})
-	const { write: writeShip } = useContractWrite(config)
+	const { write: writeShip } = useContractWrite(configShip)
+
+  const { data: shipStamina } = useContractRead({
+    address: SheepUpContractAddress,
+    abi: SheepUpContractAbi,
+    functionName: 'getPlayerShipStamina',
+    args: [address],
+    watch: true,
+  })
+
+  const { data: tapStamina } = useContractRead({
+    address: SheepUpContractAddress,
+    abi: SheepUpContractAbi,
+    functionName: 'getPlayerTapStamina',
+    args: [address],
+    watch: true,
+  })
+
+  const { data: point } = useContractRead({
+    address: SheepUpContractAddress,
+    abi: SheepUpContractAbi,
+    functionName: 'point',
+    args: [address],
+    watch: true,
+  })
+
+  
+  const shipStaminaNumber = shipStamina ? Number(shipStamina) : 0;  
+  const shipTapNumber = tapStamina ? Number(tapStamina) : 0;
+  const pointNumber = point ? Number(point) : 0;
 
 	const NotSpDisplay = () => {
 		return (
@@ -184,6 +213,7 @@ const Index = () => {
 		<>
 			<NotSpDisplay />
 			<div className='sm:hidden'>
+        <Appbar furAmount={pointNumber} tapAmount={shipTapNumber} shipAmount={shipStaminaNumber} />	
 				<Page>
 					<div className='relative flex flex-wrap w-ful'>
 						<AnimatePresence>
