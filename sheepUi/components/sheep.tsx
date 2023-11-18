@@ -14,7 +14,7 @@ import SwipeButton from './swipeButtons';
 
 const Sheep = ({ data, active, removeSheep }: SheepProps) => {
   const [exitX, setExitX] = useState(0);
-  const [number, setNumber] = useState(data.number); 
+  const [level, setLevel] = useState(data.level); 
 
   const x = useMotionValue(0);
   const input = [-200, 0, 200];
@@ -35,7 +35,7 @@ const Sheep = ({ data, active, removeSheep }: SheepProps) => {
   };
   
   const handleTap = () => {
-    setNumber((prevNumber: number) => prevNumber + 1);
+    setLevel((prevNumber: level) => prevNumber + 1);
 
     // controls.start({
     //   x: [10, -10, 10],
@@ -91,7 +91,7 @@ const Sheep = ({ data, active, removeSheep }: SheepProps) => {
           <div
             className="absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl z-10"
           >
-            {number}
+            {level}
           </div>
         </motion.div>
       ) : null}

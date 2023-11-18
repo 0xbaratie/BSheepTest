@@ -3,8 +3,7 @@ import { SetStateAction } from 'react';
 
 export type SheepData = {
   id: number;
-  number: number;
-  src: StaticImageData;
+  level: number;
 };
 
 export type SheepProps = {
