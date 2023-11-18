@@ -59,6 +59,10 @@ const Index = () => {
 
 			if (data && data.sheepeneds) {
 				console.log('@@@data.sheepeneds1=', data.sheepeneds)
+				const formattedSheepData = data.sheepeneds.map((sheep: any) => ({
+					...sheep,
+					id: parseInt(sheep.id, 10),
+				}))
 				setSheep(data.sheepeneds)
 			}
 		} catch (err) {
