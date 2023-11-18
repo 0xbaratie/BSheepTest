@@ -60,7 +60,7 @@ const Sheep = ({ data, active, removeSheep }: SheepProps) => {
         repeat: Infinity,
         repeatType: "reverse",
         ease: "easeInOut",
-        delay: delay // 遅延を設定
+        delay: delay
       }
     });
 
