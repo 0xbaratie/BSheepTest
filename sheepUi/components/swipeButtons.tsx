@@ -2,7 +2,7 @@ import { SwipeButtonProps } from '@/types';
 
 export default function SwipeButton({
   exit,
-  removeCard,
+  removeSheep,
   id,
 }: SwipeButtonProps) {
   const handleSwipe = (action: 'left' | 'right') => {
@@ -11,7 +11,7 @@ export default function SwipeButton({
     } else if (action === 'right') {
       exit(200);
     }
-    removeCard(id, action);
+    removeSheep(id, action);
   };
   return (
     <div className="flex items-center space-x-8 absolute top-10">

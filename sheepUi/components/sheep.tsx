@@ -12,9 +12,9 @@ import Image from 'next/image';
 import { useState } from 'react';
 import SwipeButton from './swipeButtons';
 
-const Sheep = ({ data, active, removeCard }: SheepProps) => {
+const Sheep = ({ data, active, removeSheep }: SheepProps) => {
   const [exitX, setExitX] = useState(0);
-  const [number, setNumber] = useState(data.number); 
+  const [level, setLevel] = useState(data.level); 
 
   const x = useMotionValue(0);
   const input = [-200, 0, 200];
@@ -27,27 +27,23 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
   ) => {
     if (info.offset.x > 100) {
       setExitX(200);
-      removeCard(data.id, 'right');
+      removeSheep(data.id, 'right');
     } else if (info.offset.x < -100) {
       setExitX(-200);
-      removeCard(data.id, 'left');
+      removeSheep(data.id, 'left');
     }
   };
   
   const handleTap = () => {
-    setNumber((prevNumber: number) => prevNumber + 1);
-
-    // controls.start({
-    //   x: [10, -10, 10],
-    //   transition: {
-    //     duration: 2.5,
-    //     repeat: Infinity,
-    //     repeatType: "reverse",
-    //     ease: "easeInOut",
-    //     delay: Math.random() * 0.5
-    //   }
-    // });
-  };  
+    setLevel((prevLevel) => {
+      const numericLevel = parseInt(prevLevel, 10); 
+      if (isNaN(numericLevel)) {
+        return 0; 
+      }
+      return numericLevel + 1;
+    });
+  };
+  
   const controls = useAnimation();
 
   useEffect(() => {
@@ -60,7 +56,7 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
         repeat: Infinity,
         repeatType: "reverse",
         ease: "easeInOut",
-        delay: delay // 遅延を設定
+        delay: delay
       }
     });
 
@@ -84,14 +80,14 @@ const Sheep = ({ data, active, removeCard }: SheepProps) => {
           onTap={handleTap}
         >
           <Image
-            src={data.src}
+            src="/images/sheep.svg"
             fill
             alt=""
           />
           <div
             className="absolute top-1/2 left-1/3 transform -translate-x-1/2 -translate-y-1/2 text-white text-xl z-10"
           >
-            {number}
+            {level}
           </div>
         </motion.div>
       ) : null}
