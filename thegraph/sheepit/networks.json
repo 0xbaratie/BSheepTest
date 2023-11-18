@@ -1,8 +1,0 @@
-{
-  "base-testnet": {
-    "SheepIt": {
-      "address": "0xe2c34d76643cc7a79d091821a06e8293053abbfa",
-      "startBlock": 12548866
-    }
-  }
-}

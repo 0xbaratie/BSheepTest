@@ -3,12 +3,12 @@ schema:
   file: schema.graphql
 dataSources:
   - kind: ethereum
-    name: SheepIt
+    name: SheepUp
     network: base-testnet
     source:
-      address: "0xe2c34d76643cc7a79d091821a06e8293053abbfa"
-      abi: SheepIt
-      startBlock: 12548866
+      address: "0x6da17Da9c3757edF610Ba2b710885a38383578fc"
+      abi: SheepUp
+      startBlock: 12561182
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -17,11 +17,11 @@ dataSources:
         - Sheepened
         - Shipped
       abis:
-        - name: SheepIt
-          file: SheepIt/abis/SheepIt.json
+        - name: SheepUp
+          file: SheepUp/abis/SheepUp.json
       eventHandlers:
         - event: Sheepened(indexed uint256,uint256,uint256)
           handler: handleSheepened
         - event: Shipped(indexed address,uint256)
           handler: handleShipped
-      file: SheepIt/SheepIt.wasm
+      file: SheepUp/SheepUp.wasm

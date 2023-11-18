@@ -174,7 +174,57 @@ export class URI__Params {
   }
 }
 
-export class SheepIt__sheepStatusResult {
+export class SheepUp__playerShipCountResult {
+  value0: BigInt;
+  value1: BigInt;
+
+  constructor(value0: BigInt, value1: BigInt) {
+    this.value0 = value0;
+    this.value1 = value1;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    return map;
+  }
+
+  getCount(): BigInt {
+    return this.value0;
+  }
+
+  getShippedAt(): BigInt {
+    return this.value1;
+  }
+}
+
+export class SheepUp__playerTapCountResult {
+  value0: BigInt;
+  value1: BigInt;
+
+  constructor(value0: BigInt, value1: BigInt) {
+    this.value0 = value0;
+    this.value1 = value1;
+  }
+
+  toMap(): TypedMap<string, ethereum.Value> {
+    let map = new TypedMap<string, ethereum.Value>();
+    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
+    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
+    return map;
+  }
+
+  getCount(): BigInt {
+    return this.value0;
+  }
+
+  getTappedAt(): BigInt {
+    return this.value1;
+  }
+}
+
+export class SheepUp__sheepStatusResult {
   value0: BigInt;
   value1: BigInt;
 
@@ -199,9 +249,116 @@ export class SheepIt__sheepStatusResult {
   }
 }
 
-export class SheepIt extends ethereum.SmartContract {
-  static bind(address: Address): SheepIt {
-    return new SheepIt("SheepIt", address);
+export class SheepUp extends ethereum.SmartContract {
+  static bind(address: Address): SheepUp {
+    return new SheepUp("SheepUp", address);
+  }
+
+  PLAYER_SHIP_COUNT_CAP(): BigInt {
+    let result = super.call(
+      "PLAYER_SHIP_COUNT_CAP",
+      "PLAYER_SHIP_COUNT_CAP():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_PLAYER_SHIP_COUNT_CAP(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "PLAYER_SHIP_COUNT_CAP",
+      "PLAYER_SHIP_COUNT_CAP():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  PLAYER_TAP_COUNT_CAP(): BigInt {
+    let result = super.call(
+      "PLAYER_TAP_COUNT_CAP",
+      "PLAYER_TAP_COUNT_CAP():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_PLAYER_TAP_COUNT_CAP(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "PLAYER_TAP_COUNT_CAP",
+      "PLAYER_TAP_COUNT_CAP():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  SHIP_CAP(): BigInt {
+    let result = super.call("SHIP_CAP", "SHIP_CAP():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_SHIP_CAP(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("SHIP_CAP", "SHIP_CAP():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  SHIP_COUNT_RECOVER_SECOND(): BigInt {
+    let result = super.call(
+      "SHIP_COUNT_RECOVER_SECOND",
+      "SHIP_COUNT_RECOVER_SECOND():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_SHIP_COUNT_RECOVER_SECOND(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "SHIP_COUNT_RECOVER_SECOND",
+      "SHIP_COUNT_RECOVER_SECOND():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  TAP_COUNT_RECOVER_SECOND(): BigInt {
+    let result = super.call(
+      "TAP_COUNT_RECOVER_SECOND",
+      "TAP_COUNT_RECOVER_SECOND():(uint256)",
+      []
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_TAP_COUNT_RECOVER_SECOND(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "TAP_COUNT_RECOVER_SECOND",
+      "TAP_COUNT_RECOVER_SECOND():(uint256)",
+      []
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   balanceOf(account: Address, id: BigInt): BigInt {
@@ -265,6 +422,52 @@ export class SheepIt extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigIntArray());
   }
 
+  getPlayerShipStamina(_sender: Address): BigInt {
+    let result = super.call(
+      "getPlayerShipStamina",
+      "getPlayerShipStamina(address):(uint256)",
+      [ethereum.Value.fromAddress(_sender)]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getPlayerShipStamina(_sender: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getPlayerShipStamina",
+      "getPlayerShipStamina(address):(uint256)",
+      [ethereum.Value.fromAddress(_sender)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getPlayerTapStamina(_sender: Address): BigInt {
+    let result = super.call(
+      "getPlayerTapStamina",
+      "getPlayerTapStamina(address):(uint256)",
+      [ethereum.Value.fromAddress(_sender)]
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getPlayerTapStamina(_sender: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getPlayerTapStamina",
+      "getPlayerTapStamina(address):(uint256)",
+      [ethereum.Value.fromAddress(_sender)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
   isApprovedForAll(account: Address, operator: Address): boolean {
     let result = super.call(
       "isApprovedForAll",
@@ -316,14 +519,114 @@ export class SheepIt extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  sheepStatus(param0: BigInt): SheepIt__sheepStatusResult {
+  maxShipCount(): BigInt {
+    let result = super.call("maxShipCount", "maxShipCount():(uint256)", []);
+
+    return result[0].toBigInt();
+  }
+
+  try_maxShipCount(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("maxShipCount", "maxShipCount():(uint256)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  playerShipCount(param0: Address): SheepUp__playerShipCountResult {
+    let result = super.call(
+      "playerShipCount",
+      "playerShipCount(address):(uint256,uint256)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return new SheepUp__playerShipCountResult(
+      result[0].toBigInt(),
+      result[1].toBigInt()
+    );
+  }
+
+  try_playerShipCount(
+    param0: Address
+  ): ethereum.CallResult<SheepUp__playerShipCountResult> {
+    let result = super.tryCall(
+      "playerShipCount",
+      "playerShipCount(address):(uint256,uint256)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new SheepUp__playerShipCountResult(
+        value[0].toBigInt(),
+        value[1].toBigInt()
+      )
+    );
+  }
+
+  playerTapCount(param0: Address): SheepUp__playerTapCountResult {
+    let result = super.call(
+      "playerTapCount",
+      "playerTapCount(address):(uint256,uint256)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+
+    return new SheepUp__playerTapCountResult(
+      result[0].toBigInt(),
+      result[1].toBigInt()
+    );
+  }
+
+  try_playerTapCount(
+    param0: Address
+  ): ethereum.CallResult<SheepUp__playerTapCountResult> {
+    let result = super.tryCall(
+      "playerTapCount",
+      "playerTapCount(address):(uint256,uint256)",
+      [ethereum.Value.fromAddress(param0)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      new SheepUp__playerTapCountResult(
+        value[0].toBigInt(),
+        value[1].toBigInt()
+      )
+    );
+  }
+
+  point(param0: Address): BigInt {
+    let result = super.call("point", "point(address):(uint256)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
+
+    return result[0].toBigInt();
+  }
+
+  try_point(param0: Address): ethereum.CallResult<BigInt> {
+    let result = super.tryCall("point", "point(address):(uint256)", [
+      ethereum.Value.fromAddress(param0)
+    ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  sheepStatus(param0: BigInt): SheepUp__sheepStatusResult {
     let result = super.call(
       "sheepStatus",
       "sheepStatus(uint256):(uint256,uint256)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
-    return new SheepIt__sheepStatusResult(
+    return new SheepUp__sheepStatusResult(
       result[0].toBigInt(),
       result[1].toBigInt()
     );
@@ -331,7 +634,7 @@ export class SheepIt extends ethereum.SmartContract {
 
   try_sheepStatus(
     param0: BigInt
-  ): ethereum.CallResult<SheepIt__sheepStatusResult> {
+  ): ethereum.CallResult<SheepUp__sheepStatusResult> {
     let result = super.tryCall(
       "sheepStatus",
       "sheepStatus(uint256):(uint256,uint256)",
@@ -342,27 +645,8 @@ export class SheepIt extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new SheepIt__sheepStatusResult(value[0].toBigInt(), value[1].toBigInt())
+      new SheepUp__sheepStatusResult(value[0].toBigInt(), value[1].toBigInt())
     );
-  }
-
-  stamina(param0: Address): BigInt {
-    let result = super.call("stamina", "stamina(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-
-    return result[0].toBigInt();
-  }
-
-  try_stamina(param0: Address): ethereum.CallResult<BigInt> {
-    let result = super.tryCall("stamina", "stamina(address):(uint256)", [
-      ethereum.Value.fromAddress(param0)
-    ]);
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
   supportsInterface(interfaceId: Bytes): boolean {
@@ -616,20 +900,20 @@ export class ShipCall__Outputs {
   }
 }
 
-export class SitCall extends ethereum.Call {
-  get inputs(): SitCall__Inputs {
-    return new SitCall__Inputs(this);
+export class TapCall extends ethereum.Call {
+  get inputs(): TapCall__Inputs {
+    return new TapCall__Inputs(this);
   }
 
-  get outputs(): SitCall__Outputs {
-    return new SitCall__Outputs(this);
+  get outputs(): TapCall__Outputs {
+    return new TapCall__Outputs(this);
   }
 }
 
-export class SitCall__Inputs {
-  _call: SitCall;
+export class TapCall__Inputs {
+  _call: TapCall;
 
-  constructor(call: SitCall) {
+  constructor(call: TapCall) {
     this._call = call;
   }
 
@@ -638,10 +922,10 @@ export class SitCall__Inputs {
   }
 }
 
-export class SitCall__Outputs {
-  _call: SitCall;
+export class TapCall__Outputs {
+  _call: TapCall;
 
-  constructor(call: SitCall) {
+  constructor(call: TapCall) {
     this._call = call;
   }
 }
