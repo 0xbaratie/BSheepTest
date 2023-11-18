@@ -1,5 +1,5 @@
-# Sheep Up
-Sheep Up is an MMO game that aims to maximize the number of points earned by shipping sheep while mass-producing them.
+# SheepUp!
+SheepUp! is an MMO game that aims to maximize the number of points earned by shipping sheep while mass-producing them.
 The following are features
 
 - One sheep is generated for each wallet generated. (Press the button once before playing the game in this hackathon.)
@@ -25,7 +25,7 @@ Therefore, it is important to produce high-scoring sheep before someone else shi
 - PWA
 
 # Our idea was inspired by
-- FrindTech
+- Friedtech
 URL: https://www.friend.tech/
 - DrawTech
 URL: https://www.draw.tech/
