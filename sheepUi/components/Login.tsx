@@ -9,7 +9,7 @@ const Login = () => {
         {/* <div className="hidden sm:flex flex-col items-center justify-center bg-blue h-screen"> */}
         <div className="flex flex-col items-center justify-center bg-blue h-screen">
           <img src="/images/sheep.svg" alt="Sheep Icon" className="w-18 h-18" />
-          <p className="p-2 font-bold text-4xl text-white">Sheep It</p>
+          <p className="p-2 font-bold text-4xl text-white">Sheep Up</p>
           <p className="p-2 font-bold text-md  text-white">An onchain Sheeping (Sheep * ship it) game</p>
           <div className="w-72 tracking-tight text-xs bg-stone-300 p-2 rounded-sm text-gray-200">
             This is beta software that is an interface to (open source, verified)
