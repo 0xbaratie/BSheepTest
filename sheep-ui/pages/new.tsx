@@ -6,13 +6,13 @@ import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
 export default function Dummy() {
-  const [cards, setCards] = useState<SheepData[]>(sheepData);
+  const [sheep, setSheep] = useState<SheepData[]>(sheepData);
   const [rightSwipe, setRightSwipe] = useState(0);
   const [leftSwipe, setLeftSwipe] = useState(0);
 
-  const activeIndex = cards.length - 1;
+  const activeIndex = sheep.length - 1;
   const removeCard = (id: number, action: 'right' | 'left') => {
-    setCards((prev) => prev.filter((card) => card.id !== id));
+    setSheep((prev) => prev.filter((card) => card.id !== id));
     if (action === 'right') {
       setRightSwipe((prev) => prev + 1);
     } else {
@@ -23,8 +23,8 @@ export default function Dummy() {
     <div className="relative flex h-screen w-full items-end justify-center overflow-hidden bg-black text-textGrey">
       <Light />
       <AnimatePresence>
-        {cards.length ? (
-          cards.map((card) => (
+        {sheep.length ? (
+          sheep.map((card) => (
             <Card
               key={card.id}
               data={card}
