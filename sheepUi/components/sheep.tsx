@@ -36,15 +36,15 @@ const Sheep = ({ data, active, removeSheep, tapCard, shipCard }: SheepProps) => 
 	}
 
 	const handleTap = () => {
-		setLevel((prevLevel) => {
-			const numericLevel = parseInt(prevLevel, 10)
-			if (isNaN(numericLevel)) {
-				return 0
-			}
-			tapCard(data.id)
-			return numericLevel + 1
-		})
-	}
+    setLevel((prevLevel) => {
+      if (typeof prevLevel !== 'number' || isNaN(prevLevel)) {
+        return 0;
+      }
+      tapCard(data.id);
+      return prevLevel + 1;
+    });
+  };
+  
 
 	const controls = useAnimation()
 

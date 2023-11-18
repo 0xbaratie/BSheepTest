@@ -16,7 +16,7 @@ export type SheepProps = {
 
 export type SwipeButtonProps = {
 	exit: (value: SetStateAction<number>) => void
-	removeCard: (id: number, action: 'right' | 'left') => void
+	removeSheep: (id: number, action: 'right' | 'left') => void
 	id: number
 }
 
