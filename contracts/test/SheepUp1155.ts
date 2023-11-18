@@ -43,7 +43,7 @@ describe("SheepUp1155", function () {
       ).equals(1n);
 
       //maxcount
-      expect(await sheepUp1155.read.maxSheepCount()).equals(3n);
+      expect(await sheepUp1155.read.currentSheepId()).equals(3n);
     });
 
     it("Tap", async function () {

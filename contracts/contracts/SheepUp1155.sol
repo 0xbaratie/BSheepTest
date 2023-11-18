@@ -39,7 +39,7 @@ contract SheepUp1155 is ERC1155 {
     uint public constant SHIP_COUNT_RECOVER_SECOND = 3600;
 
     /** variables */
-    uint public maxSheepCount = 0;
+    uint public currentSheepId = 0;
     uint public maxShipCount = 0;
     // mapping( sheepId => SheepStatus )
     mapping(uint => SheepStatus) public sheepStatus;
@@ -80,8 +80,9 @@ contract SheepUp1155 is ERC1155 {
     }
 
     function mint() external {
-        maxSheepCount++;
+        currentSheepId++;
         _mint(msg.sender, SHEEP_ID, 1, "");
+        emit Sheepened(currentSheepId, 0, 0);
     }
 
     function tap(uint _sheepId) external {
@@ -101,7 +102,7 @@ contract SheepUp1155 is ERC1155 {
             block.timestamp
         );
 
-        if (_sheepId > maxSheepCount) {
+        if (_sheepId > currentSheepId) {
             revert("Sheep does not exist");
         }
 
@@ -135,7 +136,7 @@ contract SheepUp1155 is ERC1155 {
             revert("Ship cap reached");
         }
 
-        if (_sheepId > maxSheepCount) {
+        if (_sheepId > currentSheepId) {
             revert("Sheep does not exist");
         }
 
