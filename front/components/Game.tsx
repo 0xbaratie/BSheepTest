@@ -14,7 +14,7 @@ import RandomInterval from "../data/RandomInterval";
 import LotteryModal from "./LotteryModal";
 import { Footer } from "./Footer";
 
-import {usePrivy, useWallets} from '@privy-io/react-auth';
+import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 
 type NumberSpanProps = {
@@ -48,6 +48,26 @@ const Button = ({ cta, onClick_, disabled }: buttonProps) => {
   );
 };
 
+//graph ql
+import { Sheepend } from "../graphql/SheepUpGraph";
+
+async function sheepend() {
+  console.log("sheepend");
+  try {
+    const data = await Sheepend();
+
+    if (data && data.sheepeneds) {
+      console.log(data.sheepeneds);
+    }
+  } catch (err) {
+    if (err instanceof Error) {
+      console.error(err.message);
+    } else {
+      console.error("An unexpected error occurred.");
+    }
+  }
+}
+
 const Game: NextPage = () => {
   const [randomNumber, setRandomNumber] = useState("1337");
   const [counter, setCounter] = useState(1);
@@ -60,9 +80,9 @@ const Game: NextPage = () => {
   const router = useRouter();
   // Privy hooks
   const { ready, authenticated, logout } = usePrivy();
-  const {wallets} = useWallets();
+  const { wallets } = useWallets();
   const { address, isConnected, isConnecting, isDisconnected } = useAccount();
-  const {wallet: activeWallet, setActiveWallet} = usePrivyWagmi();
+  const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi();
 
   const logout_ = async () => {
     await logout();
@@ -81,13 +101,13 @@ const Game: NextPage = () => {
     watch: true,
   });
 
-  const {config} = usePrepareContractWrite({
+  const { config } = usePrepareContractWrite({
     address: NFTContractAddress,
     abi: NFTContractAbi,
-    functionName: 'mint',
+    functionName: "mint",
     enabled: !!NFTContractAddress,
   });
-  const {data, isLoading, isError, write: writeA} = useContractWrite(config);
+  const { data, isLoading, isError, write: writeA } = useContractWrite(config);
 
   const {
     data: writeData,
@@ -101,6 +121,10 @@ const Game: NextPage = () => {
   });
 
   const hashValue = writeData?.hash;
+
+  useEffect(() => {
+    sheepend();
+  }, []);
 
   const NumberSpan: React.FC<NumberSpanProps> = ({
     children,
