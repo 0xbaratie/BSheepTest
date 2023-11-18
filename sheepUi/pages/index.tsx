@@ -140,7 +140,7 @@ const Index = () => {
 		args: [ship],
 		enabled: !!SheepUpContractAddress,
 	})
-	const { write: writeShip } = useContractWrite(config)
+	const { write: writeShip } = useContractWrite(configShip)
 
 	const NotSpDisplay = () => {
 		return (
