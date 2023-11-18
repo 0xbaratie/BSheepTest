@@ -35,7 +35,7 @@ const Sheep = ({ data, active, removeSheep }: SheepProps) => {
   };
   
   const handleTap = () => {
-    setLevel((prevNumber: level) => prevNumber + 1);
+    setLevel((prevNumber) => prevNumber + 1);
 
     // controls.start({
     //   x: [10, -10, 10],
