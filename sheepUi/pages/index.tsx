@@ -44,7 +44,6 @@ const Index = () => {
   const [sheep, setSheep] = useState<SheepData[]>(sheepData);
   const [rightSwipe, setRightSwipe] = useState(0);
   const [leftSwipe, setLeftSwipe] = useState(0);
-  const [sheepenedData, setSheepenedData] = useState<SheepenedData[]>([]);
 
   async function sheepend() {
     console.log("sheepend");
@@ -53,9 +52,8 @@ const Index = () => {
   
       if (data && data.sheepeneds) {
         console.log("@@@data.sheepeneds1=", data.sheepeneds);
-        setSheepenedData(data.sheepeneds);
+        setSheep(data.sheepeneds);
       }
-      console.log("@@@sheepeneds2=", sheepenedData)
     } catch (err) {
       if (err instanceof Error) {
         console.error(err.message);

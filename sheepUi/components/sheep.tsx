@@ -35,19 +35,15 @@ const Sheep = ({ data, active, removeSheep }: SheepProps) => {
   };
   
   const handleTap = () => {
-    setLevel((prevNumber) => prevNumber + 1);
-
-    // controls.start({
-    //   x: [10, -10, 10],
-    //   transition: {
-    //     duration: 2.5,
-    //     repeat: Infinity,
-    //     repeatType: "reverse",
-    //     ease: "easeInOut",
-    //     delay: Math.random() * 0.5
-    //   }
-    // });
-  };  
+    setLevel((prevLevel) => {
+      const numericLevel = parseInt(prevLevel, 10); 
+      if (isNaN(numericLevel)) {
+        return 0; 
+      }
+      return numericLevel + 1;
+    });
+  };
+  
   const controls = useAnimation();
 
   useEffect(() => {
