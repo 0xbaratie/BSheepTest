@@ -6,6 +6,7 @@ import {
   useContractRead,
   useContractWrite,
   useWaitForTransaction,
+  usePrepareContractWrite,
 } from "wagmi";
 import { NFTContractAbi } from "../data/NFTContractAbi";
 import { NFTContractAddress } from "../data/NFTContractAddress";
@@ -14,7 +15,7 @@ import FullScreenModal from "./FullScreenModal";
 import LotteryModal from "./LotteryModal";
 import { Footer } from "./Footer";
 
-import { usePrivy } from "@privy-io/react-auth";
+import {usePrivy, useWallets} from '@privy-io/react-auth';
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 
 type NumberSpanProps = {
@@ -60,11 +61,9 @@ const Game: NextPage = () => {
   const router = useRouter();
   // Privy hooks
   const { ready, authenticated, logout } = usePrivy();
-  const { wallet: activeWallet } = usePrivyWagmi();
+  const {wallets} = useWallets();
   const { address, isConnected, isConnecting, isDisconnected } = useAccount();
-  // console.log("game active wallet", activeWallet);
-  // console.log("game address", address);
-  // console.log("game activeWallet?.chainId", activeWallet?.chainId);
+  const {wallet: activeWallet, setActiveWallet} = usePrivyWagmi();
 
   const logout_ = async () => {
     await logout();
@@ -82,6 +81,14 @@ const Game: NextPage = () => {
     functionName: "getLotteryNumber",
     watch: true,
   });
+
+  const {config} = usePrepareContractWrite({
+    address: NFTContractAddress,
+    abi: NFTContractAbi,
+    functionName: 'mint',
+    enabled: !!NFTContractAddress,
+  });
+  const {data, isLoading, isError, write: writeA} = useContractWrite(config);
 
   const {
     data: writeData,
@@ -160,17 +167,6 @@ const Game: NextPage = () => {
         <LotteryModal onClose={closeModal} yourNum={yourNum} />
       </FullScreenModal>
 
-      <h1 className="font-mincho text-3xl mt-10 text-primary font-extrabold text-center">
-        Are you 1337?
-      </h1>
-      <p className="font-mincho mt-2 mb-6 text-sm text-primary-text">
-        Based on Farcaster & Base
-      </p>
-
-      <p className="mt-4 mb-6 text-4xl text-primary-text font-bold">
-        {randomNumber}
-      </p>
-
       <div className="border-1 flex flex-col items-start gap-2 rounded border border-black bg-slate-100 p-3">
         <h1 className="text-4xl font-bold">Privy</h1>
         {ready && !authenticated && (
@@ -186,6 +182,13 @@ const Game: NextPage = () => {
               <br />
               Active wallet is <MonoLabel label={activeWallet?.address || ""} />
             </p>
+            <ul>
+              {wallets.map((wallet) => (
+                <li key={wallet.address}>
+                  <button onClick={() => setActiveWallet(wallet)}>Activate {wallet.address}</button>
+                </li>
+              ))}
+            </ul>
             <Button onClick_={logout_} cta="Logout from Privy" />
           </>
         )}
@@ -207,7 +210,7 @@ const Game: NextPage = () => {
                 <button
                   className="border-none mt-6 btn bg-primary text-white hover:bg-primary-hover"
                   type="button"
-                  onClick={() => write()}
+                  onClick={() => writeA?.()}
                 >
                   Stop
                 </button>
@@ -216,27 +219,6 @@ const Game: NextPage = () => {
           </>
         )}
       </div>
-
-      <p className="font-mincho mt-16 text-sm text-primary-text">
-        Latest 10 numbers
-      </p>
-      <div className="mt-4">
-        <div className="flex flex-wrap justify-between mb-4">
-          {latestNums.slice(0, 5).map((num, index) => (
-            <NumberSpan key={index} marginRight={index !== 4}>
-              {num}
-            </NumberSpan>
-          ))}
-        </div>
-        <div className="flex flex-wrap justify-between">
-          {latestNums.slice(5).map((num, index) => (
-            <NumberSpan key={index + 5} marginRight={index !== 4}>
-              {num}
-            </NumberSpan>
-          ))}
-        </div>
-      </div>
-      <Footer />
     </div>
   );
 };

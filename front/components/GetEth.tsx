@@ -1,61 +1,76 @@
 import { useEffect } from "react";
 // import { FaEthereum } from "react-icons/fa";
-// import { LuCopy } from "react-icons/lu";
+import { LuCopy } from "react-icons/lu";
 import { Address, createWalletClient, http, parseEther } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
+import truncateString from "./truncateString";
 
-// import logo from "../../public/assets/logo.png";
 // import getNetworkConfig from "../network/getNetworkConfig";
-// import truncateString from "./truncateString";
 
 const GetEth = ({ address }: { address: Address }) => {
+
+  const copyToClipboardFallback = (text: string) => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      const successful = document.execCommand('copy');
+      const msg = successful ? 'successful' : 'unsuccessful';
+      console.log('Fallback: Copying text command was ' + msg);
+    } catch (err) {
+      console.error('Fallback: Oops, unable to copy', err);
+    }
+    document.body.removeChild(textarea);
+  };
+  
+  const copyToClipboard = (text: string) => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text)
+        .then(() => console.log('Text copied to clipboard'))
+        .catch(err => console.error('Could not copy text: ', err));
+    } else {
+      copyToClipboardFallback(text);
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-4 w-full h-full items-center justify-center tracking-tight">
-      <div className="w-72 flex flex-col gap-12">
+    <div className="flex flex-col gap-4 w-full h-full items-center justify-center tracking-tight bg-blue">
+      <div className="w-80 flex flex-col gap-12 items-center justify-center">
         <div>
           <div className="flex gap-1 tracking-tight items-center">
-            <div className="w-20 h-20">
-              {/* <img src={logo} className="object-fit" /> */}
-            </div>
-            <div className="w-20 h-20 text-yellow-800">
-              {/* <FaEthereum className="text-7xl" /> */}
-            </div>
+            <img src="/images/sheep.svg" alt="Sheep Icon" className="w-18 h-18" />
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-bold">Get some ETH on Base</h1>
-          <p className="text-sm">
+          <h1 className="text-2xl font-bold text-white">Get some ETH on Base</h1>
+          <p className="text-sm text-white">
             You'll use ETH, the official currency of Base, to buy tiles and earn
             rewards
           </p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-xl">Receive ETH on Base</div>
+
+          <div className="text-xl text-white mt-4">Receive ETH on Base</div>
           <div className="p-4 bg-stone-200 rounded-sm">
-            <div className="flex gap-1 justify-between items-center">
+            <div className="flex gap-1 justify-between items-center font-bold">
               <div>
                 <div>Copy Address</div>
-                <div className="text-sm">{address}</div>
+                <div className="text-sm">{truncateString(address, 30)}</div>
               </div>
               <div
                 className="active:text-stone-600"
                 onClick={() => {
-                  navigator.clipboard.writeText(address);
+                  copyToClipboard(address);
                 }}
               >
-                {/* <LuCopy className="text-3xl" /> */}
+                <LuCopy className="text-xl" />
               </div>
             </div>
           </div>
         </div>
         <div className="text-sm">
-          Once there is ETH in your wallet, you'll get started with the rest of
+          Once there is GoerliETH in your wallet, you'll get started with the rest of
           the app. We recommend at least 0.01 ETH.
         </div>
-
-        {/* <div className="text-lg font-bold p-3 bg-yellow-00">
-          PLAYTEST: YOU ARE BEING AIRDROPPED 1 ETH HOLD TIGHT USE IT WISELY
-        </div> */}
       </div>
     </div>
   );

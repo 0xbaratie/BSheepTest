@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Appbar from '@/components/appbar'
-import BottomNav from '@/components/bottom-nav'
 
 interface Props {
 	title?: string
@@ -11,23 +10,18 @@ const Page = ({ title, children }: Props) => (
 	<>
 		{title ? (
 			<Head>
-				<title>Rice Bowl | {title}</title>
+				<title>Sheep It | {title}</title>
 			</Head>
 		) : null}
 
 		<Appbar />
-
-		<main
-			/**
-			 * Padding top = `appbar` height
-			 * Padding bottom = `bottom-nav` height
-			 */
-			className='mx-auto max-w-screen-md pt-20 pb-16 px-safe sm:pb-0'
-		>
+		
+		{/* Change content */}
+		<main className='mx-auto max-w-screen-md pt-20 pb-16 px-safe sm:pb-0 h-screen bg-gradient-to-br from-blue to-white'>
 			<div className='p-6'>{children}</div>
 		</main>
 
-		<BottomNav />
+
 	</>
 )
 
