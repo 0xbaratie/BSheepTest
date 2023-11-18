@@ -213,5 +213,38 @@ describe("SheepUp1155", function () {
         310n,
       );
     });
+
+    it("Taps", async function () {
+      const { sheepUp1155 } = await loadFixture(deployFixture);
+      await sheepUp1155.write.mint();
+      await sheepUp1155.write.mint();
+
+      await sheepUp1155.write.taps([
+        [
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          1n,
+          2n,
+          2n,
+          2n,
+          2n,
+        ],
+      ]);
+      expect((await sheepUp1155.read.sheepStatus([1n]))[0]).equals(16n);
+      expect((await sheepUp1155.read.sheepStatus([2n]))[0]).equals(4n);
+    });
   });
 });
