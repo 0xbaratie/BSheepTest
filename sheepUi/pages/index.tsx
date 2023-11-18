@@ -101,7 +101,6 @@ const Index = () => {
 	const { ready } = usePrivy()
 	const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi()
 	const { address, isConnected } = useAccount()
-
 	const {
 		data,
 		isLoading: isBalanceLoading,
@@ -142,6 +141,35 @@ const Index = () => {
 		enabled: !!SheepUpContractAddress,
 	})
 	const { write: writeShip } = useContractWrite(configShip)
+  const { data: shipStamina } = useContractRead({
+    address: SheepUpContractAddress,
+    abi: SheepUpContractAbi,
+    functionName: 'getPlayerShipStamina',
+    args: [address],
+    watch: true,
+  })
+
+  const { data: tapStamina } = useContractRead({
+    address: SheepUpContractAddress,
+    abi: SheepUpContractAbi,
+    functionName: 'getPlayerTapStamina',
+    args: [address],
+    watch: true,
+  })
+
+  const { data: point } = useContractRead({
+    address: SheepUpContractAddress,
+    abi: SheepUpContractAbi,
+    functionName: 'point',
+    args: [address],
+    watch: true,
+  })
+
+  
+  const shipStaminaNumber = shipStamina ? Number(shipStamina) : 0;  
+  const shipTapNumber = tapStamina ? Number(tapStamina) : 0;
+  const pointNumber = point ? Number(point) : 0;
+
 
 	const NotSpDisplay = () => {
 		return (
@@ -185,7 +213,7 @@ const Index = () => {
 		<>
 			<NotSpDisplay />
 			<div className='sm:hidden'>
-        <Appbar furAmount={1000} tapAmount={10} shipAmount={3} />	
+        <Appbar furAmount={pointNumber} tapAmount={shipTapNumber} shipAmount={shipStaminaNumber} />	
 				<Page>
 					<div className='relative flex flex-wrap w-ful'>
 						<AnimatePresence>
