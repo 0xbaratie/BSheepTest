@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSwipeable } from 'react-swipeable'
 import Page from '../components/page'
 import Section from '../components/section'
+import Appbar from '../components/appbar'
 import Sheep from '@/components/sheep'
 import { SheepData } from '@/types'
 import { sheepData } from '@/utils/data'
@@ -184,6 +185,7 @@ const Index = () => {
 		<>
 			<NotSpDisplay />
 			<div className='sm:hidden'>
+        <Appbar furAmount={1000} tapAmount={10} shipAmount={3} />	
 				<Page>
 					<div className='relative flex flex-wrap w-ful'>
 						<AnimatePresence>
