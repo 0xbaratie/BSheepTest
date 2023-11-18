@@ -12,7 +12,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import SwipeButton from './swipeButtons'
 
-const Sheep = ({ data, active, removeSheep }: SheepProps) => {
+const Sheep = ({ data, active, removeSheep, tapCard }: SheepProps) => {
 	const [exitX, setExitX] = useState(0)
 	const [level, setLevel] = useState(data.level)
 
@@ -40,6 +40,7 @@ const Sheep = ({ data, active, removeSheep }: SheepProps) => {
 			if (isNaN(numericLevel)) {
 				return 0
 			}
+			tapCard(data.id)
 			return numericLevel + 1
 		})
 	}

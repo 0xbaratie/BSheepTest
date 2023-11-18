@@ -10,7 +10,6 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 import { zeroAddress } from 'viem'
-import { useBalance } from 'wagmi'
 
 import Game from '../components/Game'
 import GetEth from '../components/GetEth'
@@ -18,10 +17,19 @@ import Login from '../components/Login'
 
 import { baseGoerli } from 'wagmi/chains'
 
-import { useAccount } from 'wagmi'
-
 import { usePrivy } from '@privy-io/react-auth'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
+
+import { SheepUpContractAbi } from '../data/SheepUpContractAbi'
+import { SheepUpContractAddress } from '../data/SheepUpContractAddress'
+import {
+	useAccount,
+	useBalance,
+	useContractRead,
+	useContractWrite,
+	useWaitForTransaction,
+	usePrepareContractWrite,
+} from 'wagmi'
 
 //graph ql
 import { Sheepend } from '../graphql/SheepUpGraph'
@@ -42,6 +50,7 @@ const Index = () => {
 	const [sheep, setSheep] = useState<SheepData[]>(sheepData)
 	const [rightSwipe, setRightSwipe] = useState(0)
 	const [leftSwipe, setLeftSwipe] = useState(0)
+	const [taps, setTaps] = useState<number[]>([])
 
 	async function sheepend() {
 		console.log('sheepend')
@@ -70,6 +79,15 @@ const Index = () => {
 			setLeftSwipe((prev) => prev + 1)
 		}
 	}
+	const tapCard = (id: number) => {
+		setTaps((prev) => [...prev, id])
+		// TODO when initial, cannot add taps to the array
+		if (taps.length >= 9) {
+			writeTaps?.()
+			setTaps([])
+		}
+	}
+
 	const { ready } = usePrivy()
 	const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi()
 	const { address, isConnected } = useAccount()
@@ -96,6 +114,15 @@ const Index = () => {
 	useEffect(() => {
 		sheepend()
 	}, [])
+
+	const { config } = usePrepareContractWrite({
+		address: SheepUpContractAddress,
+		abi: SheepUpContractAbi,
+		functionName: 'taps',
+		args: [taps],
+		enabled: !!SheepUpContractAddress,
+	})
+	const { write: writeTaps, isSuccess } = useContractWrite(config)
 
 	const NotSpDisplay = () => {
 		return (
@@ -149,6 +176,7 @@ const Index = () => {
 										data={sheep}
 										active={true}
 										removeSheep={removeSheep}
+										tapCard={tapCard}
 									/>
 								))
 							) : (
