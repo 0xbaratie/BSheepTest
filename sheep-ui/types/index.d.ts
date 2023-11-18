@@ -1,24 +1,14 @@
 import { StaticImageData } from 'next/image';
 import { SetStateAction } from 'react';
 
-type TracksData = {
-  name: string;
-  artist: string;
-  img: string;
-};
-
-export type CardData = {
+export type SheepData = {
   id: number;
-  name: string;
+  number: number;
   src: StaticImageData;
-  age: number;
-  bio: string;
-  genre: string[];
-  tracks: TracksData[];
 };
 
 export type SheepProps = {
-  data: CardData;
+  data: SheepData;
   active: boolean;
   removeCard: (id: number, action: 'right' | 'left') => void;
 };
