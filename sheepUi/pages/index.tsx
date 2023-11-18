@@ -51,6 +51,7 @@ const Index = () => {
 	const [rightSwipe, setRightSwipe] = useState(0)
 	const [leftSwipe, setLeftSwipe] = useState(0)
 	const [taps, setTaps] = useState<number[]>([])
+	const [ship, setShip] = useState(0)
 
 	async function sheepend() {
 		console.log('sheepend')
@@ -91,6 +92,10 @@ const Index = () => {
 			setTaps([])
 		}
 	}
+	const shipCard = (id: number) => {
+		setShip(id)
+		writeShip?.()
+	}
 
 	const { ready } = usePrivy()
 	const { wallet: activeWallet, setActiveWallet } = usePrivyWagmi()
@@ -126,7 +131,16 @@ const Index = () => {
 		args: [taps],
 		enabled: !!SheepUpContractAddress,
 	})
-	const { write: writeTaps, isSuccess } = useContractWrite(config)
+	const { write: writeTaps } = useContractWrite(config)
+
+	const { config: configShip } = usePrepareContractWrite({
+		address: SheepUpContractAddress,
+		abi: SheepUpContractAbi,
+		functionName: 'ship',
+		args: [ship],
+		enabled: !!SheepUpContractAddress,
+	})
+	const { write: writeShip } = useContractWrite(config)
 
 	const NotSpDisplay = () => {
 		return (
@@ -181,6 +195,7 @@ const Index = () => {
 										active={true}
 										removeSheep={removeSheep}
 										tapCard={tapCard}
+										shipCard={shipCard}
 									/>
 								))
 							) : (

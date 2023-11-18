@@ -11,6 +11,7 @@ export type SheepProps = {
 	active: boolean
 	removeSheep: (id: number, action: 'right' | 'left') => void
 	tapCard: (id: number) => void
+	shipCard: (id: number) => void
 }
 
 export type SwipeButtonProps = {
