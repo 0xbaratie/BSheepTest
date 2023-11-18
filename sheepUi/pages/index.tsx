@@ -24,6 +24,17 @@ import { usePrivy } from "@privy-io/react-auth";
 import { usePrivyWagmi } from "@privy-io/wagmi-connector";
 
 
+//graph ql
+import { Sheepend } from "../graphql/SheepUpGraph";
+
+type SheepenedData = {
+  blockNumber: string;
+  id: string;
+  level: string;
+  shippedAt: string;
+};
+
+
 const Index = () => {
   const handlers = useSwipeable({
     onSwiped: (eventData) => console.log("User Swiped!", eventData),
@@ -33,6 +44,26 @@ const Index = () => {
   const [sheep, setSheep] = useState<SheepData[]>(sheepData);
   const [rightSwipe, setRightSwipe] = useState(0);
   const [leftSwipe, setLeftSwipe] = useState(0);
+  const [sheepenedData, setSheepenedData] = useState<SheepenedData[]>([]);
+
+  async function sheepend() {
+    console.log("sheepend");
+    try {
+      const data = await Sheepend();
+  
+      if (data && data.sheepeneds) {
+        console.log("@@@data.sheepeneds=", data.sheepeneds);
+        setSheepenedData(data.sheepeneds);
+      }
+      console.log("@@@sheepeneds1=", sheepenedData)
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      } else {
+        console.error("An unexpected error occurred.");
+      }
+    }
+  }
 
   const activeIndex = sheep.length - 1;
   const removeCard = (id: number, action: 'right' | 'left') => {
@@ -68,12 +99,16 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    sheepend();
+  }, []);
+
   const NotSpDisplay = () => {
     return (
       <div className="hidden sm:flex flex-col items-center justify-center bg-blue h-screen">
         <img src="/images/sheep.svg" alt="Sheep Icon" className="w-18 h-18" />
-        <p className="p-2 font-bold text-4xl">Sheep It</p>
-        <p className="p-2 font-bold text-md">An onchain Sheeping (Sheep * ship it) game</p>
+        <p className="p-2 font-bold text-4xl text-white">Sheep It</p>
+        <p className="p-2 font-bold text-md text-white">An onchain Sheeping (Sheep * ship it) game</p>
         <div className='bg-gray rounded-md p-4 mt-8'>
           <p className="text-black font-bold">
             Sheep It is only on mobile. Visit on your phone to play.
