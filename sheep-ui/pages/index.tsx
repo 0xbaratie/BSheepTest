@@ -13,7 +13,7 @@ export default function Home() {
 
   const activeIndex = sheep.length - 1;
   const removeCard = (id: number, action: 'right' | 'left') => {
-    setSheep((prev) => prev.filter((card) => card.id !== id));
+    setSheep((prev) => prev.filter((sheep) => sheep.id !== id));
     if (action === 'right') {
       setRightSwipe((prev) => prev + 1);
     } else {
@@ -26,10 +26,10 @@ export default function Home() {
     <div className="relative flex flex-wrap w-full text-textGrey">
       <AnimatePresence>
         {sheep.length ? (
-          sheep.map((card) => (
+          sheep.map((sheep) => (
             <Card
-              key={card.id}
-              data={card}
+              key={sheep.id}
+              data={sheep}
               active={true}
               removeCard={removeCard}
             />
