@@ -3,7 +3,7 @@ import { SheepData } from '@/types';
 import { sheepData } from '@/utils/data';
 import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 
 
 export default function Home() {
@@ -23,7 +23,7 @@ export default function Home() {
 
 
   return (
-    <div className="relative flex flex-wrap w-full text-textGrey">
+    <div className="relative flex flex-wrap w-ful">
       <AnimatePresence>
         {sheep.length ? (
           sheep.map((sheep) => (
@@ -35,7 +35,7 @@ export default function Home() {
             />
           ))
         ) : (
-          <h2 className="absolute z-10 text-center text-2xl font-bold text-textGrey ">
+          <h2 className="absolute z-10 text-center text-2xl font-bold">
             Excessive swiping can be injurious to health!
             <br />
             Come back tomorrow for more
