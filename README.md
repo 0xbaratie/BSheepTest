@@ -6,8 +6,11 @@ The following are features
 - Tap a sheep to increase the score for each sheep.
 - You can also swipe on a sheep to ship it and get more points!
 
-<img width="905" alt="Screenshot_2023-11-18_at_11 26 27_PM" src="https://github.com/aw-labs/BSheepTest/assets/8872443/d1edd18a-1e86-4c25-8985-7656aab45b60">
 
+
+<img width="905" alt="Screenshot_2023-11-18_at_11 26 27_PM" src="https://github.com/aw-labs/BSheepTest/assets/8872443/2b332ca5-984d-432e-9762-5edd74221584">
+
+Contract(Base Goerli): [0x7945f05a65efd85d6d4bc3e4279c3459476f9bee](https://goerli.basescan.org/address/0x7945f05a65efd85d6d4bc3e4279c3459476f9bee) 
 
 
 # Game tactics
