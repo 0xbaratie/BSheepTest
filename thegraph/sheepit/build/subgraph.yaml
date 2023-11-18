@@ -1,6 +1,6 @@
 specVersion: 0.0.5
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: SheepIt
@@ -18,10 +18,10 @@ dataSources:
         - Shipped
       abis:
         - name: SheepIt
-          file: ./abis/SheepIt.json
+          file: SheepIt/abis/SheepIt.json
       eventHandlers:
         - event: Sheepened(indexed uint256,uint256,uint256)
           handler: handleSheepened
         - event: Shipped(indexed address,uint256)
           handler: handleShipped
-      file: ./src/sheep-it.ts
+      file: SheepIt/SheepIt.wasm

@@ -2,9 +2,9 @@ import { formatEther, parseEther } from "viem";
 import hre from "hardhat";
 
 async function main() {
-  const sheepIt1155 = await hre.viem.deployContract("SheepIt1155", []);
+  const sheepUp1155 = await hre.viem.deployContract("SheepUp1155", []);
 
-  console.log(`deployed to ${sheepIt1155.address}`);
+  console.log(`deployed to ${sheepUp1155.address}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

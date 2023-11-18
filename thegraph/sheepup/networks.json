@@ -1,0 +1,8 @@
+{
+  "base-testnet": {
+    "SheepUp": {
+      "address": "0xaB26B5B34632ad68F650b143f32f922aBDf8b341",
+      "startBlock": 12561182
+    }
+  }
+}
