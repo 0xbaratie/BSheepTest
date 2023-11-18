@@ -53,6 +53,7 @@ const Index = () => {
 	const [leftSwipe, setLeftSwipe] = useState(0)
 	const [taps, setTaps] = useState<number[]>([])
 	const [ship, setShip] = useState(0)
+	const [isMinted, setIsMinted] = useState(false)
 
 	async function sheepend() {
 		console.log('sheepend')
@@ -125,6 +126,7 @@ const Index = () => {
 		sheepend()
 	}, [])
 
+	//send tx
 	const { config } = usePrepareContractWrite({
 		address: SheepUpContractAddress,
 		abi: SheepUpContractAbi,
@@ -142,6 +144,14 @@ const Index = () => {
 		enabled: !!SheepUpContractAddress,
 	})
 	const { write: writeShip } = useContractWrite(configShip)
+
+	const { config: configMint } = usePrepareContractWrite({
+		address: SheepUpContractAddress,
+		abi: SheepUpContractAbi,
+		functionName: 'mint',
+		enabled: !!SheepUpContractAddress,
+	})
+	const { write: writeMint } = useContractWrite(configMint)
 
 	const NotSpDisplay = () => {
 		return (
@@ -185,7 +195,7 @@ const Index = () => {
 		<>
 			<NotSpDisplay />
 			<div className='sm:hidden'>
-        <Appbar furAmount={1000} tapAmount={10} shipAmount={3} />	
+        <Appbar furAmount={1000} tapAmount={10} shipAmount={3} />
 				<Page>
 					<div className='relative flex flex-wrap w-ful'>
 						<AnimatePresence>
@@ -209,6 +219,18 @@ const Index = () => {
 							)}
 						</AnimatePresence>
 					</div>
+					{!isMinted && (
+						<div className="fixed inset-x-0 bottom-10 flex justify-center p-2.5">
+							<button className="bg-blue text-lg text-white hover:bg-primary-hover font-semibold py-4 px-8 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-opacity-50"
+								type="button"
+								onClick={() => {
+									writeMint?.()
+									setIsMinted(true)
+								}}>
+									Start
+							</button>
+						</div>
+					)}
 				</Page>
 			</div>
 		</>
