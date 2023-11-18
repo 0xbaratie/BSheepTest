@@ -85,7 +85,14 @@ contract SheepUp1155 is ERC1155 {
         emit Sheepened(currentSheepId, 0, 0);
     }
 
-    function tap(uint _sheepId) external {
+    function taps(uint[] memory _sheepIds) external {
+        uint _len = _sheepIds.length;
+        for (uint i = 0; i < _len; i++) {
+            tap(_sheepIds[i]);
+        }
+    }
+
+    function tap(uint _sheepId) public {
         uint _count = playerTapCount[msg.sender].count;
         if (_count > 0) {
             uint _tappedAt = playerTapCount[msg.sender].tappedAt;

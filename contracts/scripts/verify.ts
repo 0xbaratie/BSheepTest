@@ -2,7 +2,7 @@ import env from "hardhat";
 
 async function main() {
   await env.run("verify:verify", {
-    address: "0x6da17da9c3757edf610ba2b710885a38383578fc",
+    address: "0x7945f05a65efd85d6d4bc3e4279c3459476f9bee",
     constructorArguments: [],
   });
 }

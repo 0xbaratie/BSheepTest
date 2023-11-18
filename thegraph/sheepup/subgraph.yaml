@@ -6,7 +6,7 @@ dataSources:
     name: SheepUp
     network: base-testnet
     source:
-      address: "0x6da17Da9c3757edF610Ba2b710885a38383578fc"
+      address: "0x7945f05a65efd85d6d4bc3e4279c3459476f9bee"
       abi: SheepUp
       startBlock: 12561182
     mapping:
