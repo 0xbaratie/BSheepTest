@@ -12,7 +12,7 @@ const client = new ApolloClient({
 	},
 })
 
-export async function Sheepend(): Promise<any> {
+export async function GetAllSheepStatus(): Promise<any> {
 	const query = gql`
 		query SheepUp {
 			sheepeneds {
