@@ -1,4 +1,3 @@
-import { StaticImageData } from 'next/image'
 import { SetStateAction } from 'react'
 
 export type SheepData = {

@@ -1,19 +1,15 @@
-import React, { useEffect } from 'react'
-import { useSwipeable } from 'react-swipeable'
-import Page from '../components/page'
-import Section from '../components/section'
-import Appbar from '../components/appbar'
-import Sheep from '@/components/sheep'
 import Mint from '@/components/mint'
+import Sheep from '@/components/sheep'
 import { SheepData } from '@/types'
 import { sheepData } from '@/utils/data'
 import { AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSwipeable } from 'react-swipeable'
+import Appbar from '../components/appbar'
+import Page from '../components/page'
 
 import { zeroAddress } from 'viem'
 
-import Game from '../components/Game'
 import GetEth from '../components/GetEth'
 import Login from '../components/Login'
 
@@ -22,16 +18,15 @@ import { baseGoerli } from 'wagmi/chains'
 import { usePrivy } from '@privy-io/react-auth'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 
-import { SheepUpContractAbi } from '../data/SheepUpContractAbi'
-import { SheepUpContractAddress } from '../data/SheepUpContractAddress'
 import {
 	useAccount,
 	useBalance,
 	useContractRead,
 	useContractWrite,
-	useWaitForTransaction,
 	usePrepareContractWrite,
 } from 'wagmi'
+import { SheepUpContractAbi } from '../data/SheepUpContractAbi'
+import { SheepUpContractAddress } from '../data/SheepUpContractAddress'
 
 //graph ql
 import { Sheepend } from '../graphql/SheepUpGraph'
@@ -143,35 +138,33 @@ const Index = () => {
 		enabled: !!SheepUpContractAddress,
 	})
 	const { write: writeShip } = useContractWrite(configShip)
-  const { data: shipStamina } = useContractRead({
-    address: SheepUpContractAddress,
-    abi: SheepUpContractAbi,
-    functionName: 'getPlayerShipStamina',
-    args: [address],
-    watch: true,
-  })
+	const { data: shipStamina } = useContractRead({
+		address: SheepUpContractAddress,
+		abi: SheepUpContractAbi,
+		functionName: 'getPlayerShipStamina',
+		args: [address],
+		watch: true,
+	})
 
-  const { data: tapStamina } = useContractRead({
-    address: SheepUpContractAddress,
-    abi: SheepUpContractAbi,
-    functionName: 'getPlayerTapStamina',
-    args: [address],
-    watch: true,
-  })
+	const { data: tapStamina } = useContractRead({
+		address: SheepUpContractAddress,
+		abi: SheepUpContractAbi,
+		functionName: 'getPlayerTapStamina',
+		args: [address],
+		watch: true,
+	})
 
-  const { data: point } = useContractRead({
-    address: SheepUpContractAddress,
-    abi: SheepUpContractAbi,
-    functionName: 'point',
-    args: [address],
-    watch: true,
-  })
+	const { data: point } = useContractRead({
+		address: SheepUpContractAddress,
+		abi: SheepUpContractAbi,
+		functionName: 'point',
+		args: [address],
+		watch: true,
+	})
 
-
-  const shipStaminaNumber = shipStamina ? Number(shipStamina) : 0;
-  const shipTapNumber = tapStamina ? Number(tapStamina) : 0;
-  const pointNumber = point ? Number(point) : 0;
-
+	const shipStaminaNumber = shipStamina ? Number(shipStamina) : 0
+	const shipTapNumber = tapStamina ? Number(tapStamina) : 0
+	const pointNumber = point ? Number(point) : 0
 
 	const NotSpDisplay = () => {
 		return (
@@ -215,7 +208,11 @@ const Index = () => {
 		<>
 			<NotSpDisplay />
 			<div className='sm:hidden'>
-        <Appbar furAmount={pointNumber} tapAmount={shipTapNumber} shipAmount={shipStaminaNumber} />
+				<Appbar
+					furAmount={pointNumber}
+					tapAmount={shipTapNumber}
+					shipAmount={shipStaminaNumber}
+				/>
 				<Page>
 					<div className='relative flex flex-wrap w-ful'>
 						<AnimatePresence>
@@ -238,10 +235,7 @@ const Index = () => {
 								</h2>
 							)}
 						</AnimatePresence>
-						<Mint
-							sheep={sheep}
-							setSheep={setSheep}
-						/>
+						<Mint sheep={sheep} setSheep={setSheep} />
 					</div>
 				</Page>
 			</div>
