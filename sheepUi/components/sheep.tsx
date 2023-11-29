@@ -1,18 +1,21 @@
-import { useEffect } from 'react'
 import { SheepProps } from '@/types'
 import {
-	easeIn,
-	motion,
 	PanInfo,
+	motion,
+	useAnimation,
 	useMotionValue,
 	useTransform,
-	useAnimation,
 } from 'framer-motion'
 import Image from 'next/image'
-import { useState } from 'react'
-import SwipeButton from './swipeButtons'
+import { useEffect, useState } from 'react'
 
-const Sheep = ({ data, active, removeSheep, tapCard, shipCard }: SheepProps) => {
+const Sheep = ({
+	data,
+	active,
+	removeSheep,
+	tapCard,
+	shipCard,
+}: SheepProps) => {
 	const [exitX, setExitX] = useState(0)
 	const [level, setLevel] = useState(data.level)
 
@@ -36,15 +39,14 @@ const Sheep = ({ data, active, removeSheep, tapCard, shipCard }: SheepProps) => 
 	}
 
 	const handleTap = () => {
-    setLevel((prevLevel) => {
-      if (typeof prevLevel !== 'number' || isNaN(prevLevel)) {
-        return 0;
-      }
-      tapCard(data.id);
-      return prevLevel + 1;
-    });
-  };
-  
+		setLevel((prevLevel) => {
+			if (typeof prevLevel !== 'number' || isNaN(prevLevel)) {
+				return 0
+			}
+			tapCard(data.id)
+			return prevLevel + 1
+		})
+	}
 
 	const controls = useAnimation()
 

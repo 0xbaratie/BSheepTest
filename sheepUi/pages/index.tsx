@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react'
-import { useSwipeable } from 'react-swipeable'
-import Page from '../components/page'
-import Section from '../components/section'
-import Appbar from '../components/appbar'
-import Sheep from '@/components/sheep'
 import Mint from '@/components/mint'
+import Sheep from '@/components/sheep'
 import { SheepData } from '@/types'
 import { sheepData } from '@/utils/data'
 import { AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSwipeable } from 'react-swipeable'
+import NonMobileDisplay from '../components/NonMobileDisplay'
+import Appbar from '../components/appbar'
+import Page from '../components/page'
 
 import { zeroAddress } from 'viem'
 
-import Game from '../components/Game'
 import GetEth from '../components/GetEth'
 import Login from '../components/Login'
 
@@ -22,19 +19,18 @@ import { baseGoerli } from 'wagmi/chains'
 import { usePrivy } from '@privy-io/react-auth'
 import { usePrivyWagmi } from '@privy-io/wagmi-connector'
 
-import { SheepUpContractAbi } from '../data/SheepUpContractAbi'
-import { SheepUpContractAddress } from '../data/SheepUpContractAddress'
 import {
 	useAccount,
 	useBalance,
 	useContractRead,
 	useContractWrite,
-	useWaitForTransaction,
 	usePrepareContractWrite,
 } from 'wagmi'
+import { SheepUpContractAbi } from '../data/SheepUpContractAbi'
+import { SheepUpContractAddress } from '../data/SheepUpContractAddress'
 
 //graph ql
-import { Sheepend } from '../graphql/SheepUpGraph'
+import { GetAllSheepStatus } from '../graphql/SheepUpGraph'
 
 type SheepenedData = {
 	blockNumber: string
@@ -55,13 +51,12 @@ const Index = () => {
 	const [taps, setTaps] = useState<number[]>([])
 	const [ship, setShip] = useState(0)
 
-	async function sheepend() {
+	async function getAllSheepStatus() {
 		console.log('sheepend')
 		try {
-			const data = await Sheepend()
+			const data = await GetAllSheepStatus()
 
 			if (data && data.sheepeneds) {
-				console.log('@@@data.sheepeneds1=', data.sheepeneds)
 				const formattedSheepData = data.sheepeneds.map((sheep: any) => ({
 					...sheep,
 					id: parseInt(sheep.id, 10),
@@ -122,7 +117,7 @@ const Index = () => {
 	}, [])
 
 	useEffect(() => {
-		sheepend()
+		GetAllSheepStatus()
 	}, [])
 
 	//send tx
@@ -143,57 +138,38 @@ const Index = () => {
 		enabled: !!SheepUpContractAddress,
 	})
 	const { write: writeShip } = useContractWrite(configShip)
-  const { data: shipStamina } = useContractRead({
-    address: SheepUpContractAddress,
-    abi: SheepUpContractAbi,
-    functionName: 'getPlayerShipStamina',
-    args: [address],
-    watch: true,
-  })
+	const { data: shipStamina } = useContractRead({
+		address: SheepUpContractAddress,
+		abi: SheepUpContractAbi,
+		functionName: 'getPlayerShipStamina',
+		args: [address],
+		watch: true,
+	})
 
-  const { data: tapStamina } = useContractRead({
-    address: SheepUpContractAddress,
-    abi: SheepUpContractAbi,
-    functionName: 'getPlayerTapStamina',
-    args: [address],
-    watch: true,
-  })
+	const { data: tapStamina } = useContractRead({
+		address: SheepUpContractAddress,
+		abi: SheepUpContractAbi,
+		functionName: 'getPlayerTapStamina',
+		args: [address],
+		watch: true,
+	})
 
-  const { data: point } = useContractRead({
-    address: SheepUpContractAddress,
-    abi: SheepUpContractAbi,
-    functionName: 'point',
-    args: [address],
-    watch: true,
-  })
+	const { data: point } = useContractRead({
+		address: SheepUpContractAddress,
+		abi: SheepUpContractAbi,
+		functionName: 'point',
+		args: [address],
+		watch: true,
+	})
 
-
-  const shipStaminaNumber = shipStamina ? Number(shipStamina) : 0;
-  const shipTapNumber = tapStamina ? Number(tapStamina) : 0;
-  const pointNumber = point ? Number(point) : 0;
-
-
-	const NotSpDisplay = () => {
-		return (
-			<div className='hidden sm:flex flex-col items-center justify-center bg-blue h-screen'>
-				<img src='/images/sheep.svg' alt='Sheep Icon' className='w-18 h-18' />
-				<p className='p-2 font-bold text-4xl text-white'>Sheep Up</p>
-				<p className='p-2 font-bold text-md text-white'>
-					An onchain Sheeping (Sheep * ship it) game
-				</p>
-				<div className='bg-gray rounded-md p-4 mt-8'>
-					<p className='text-black font-bold'>
-						Sheep Up is only on mobile. Visit on your phone to play.
-					</p>
-				</div>
-			</div>
-		)
-	}
+	const shipStaminaNumber = shipStamina ? Number(shipStamina) : 0
+	const shipTapNumber = tapStamina ? Number(tapStamina) : 0
+	const pointNumber = point ? Number(point) : 0
 
 	if (!address) {
 		return (
 			<>
-				<NotSpDisplay />
+				<NonMobileDisplay />
 				<div className='sm:hidden absolute top-0 left-0 h-screen w-screen bg-stone-100'>
 					<Login />
 				</div>
@@ -203,7 +179,7 @@ const Index = () => {
 	if (!balance) {
 		return (
 			<>
-				<NotSpDisplay />
+				<NonMobileDisplay />
 				<div className='sm:hidden absolute top-0 left-0 h-screen w-screen bg-stone-100'>
 					<GetEth address={address} />
 				</div>
@@ -213,9 +189,13 @@ const Index = () => {
 
 	return (
 		<>
-			<NotSpDisplay />
+			<NonMobileDisplay />
 			<div className='sm:hidden'>
-        <Appbar furAmount={pointNumber} tapAmount={shipTapNumber} shipAmount={shipStaminaNumber} />
+				<Appbar
+					furAmount={pointNumber}
+					tapAmount={shipTapNumber}
+					shipAmount={shipStaminaNumber}
+				/>
 				<Page>
 					<div className='relative flex flex-wrap w-ful'>
 						<AnimatePresence>
@@ -238,10 +218,7 @@ const Index = () => {
 								</h2>
 							)}
 						</AnimatePresence>
-						<Mint
-							sheep={sheep}
-							setSheep={setSheep}
-						/>
+						<Mint sheep={sheep} setSheep={setSheep} />
 					</div>
 				</Page>
 			</div>
